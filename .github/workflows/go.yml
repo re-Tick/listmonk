@@ -31,7 +31,6 @@ jobs:
           sudo mv /tmp/keploy /usr/local/bin && keploy &
           make build
           ./listmonk --new-config
-          ./listmonk --install
 
 
       - name: Test
