@@ -36,7 +36,7 @@ func handleSendTxMessage(c echo.Context) error {
 	}
 
 	// Get the subscriber.
-	sub, err := app.core.GetSubscriber(m.SubscriberID, "", m.SubscriberEmail)
+	sub, err := app.core.GetSubscriber(c.Request().Context(), m.SubscriberID, "", m.SubscriberEmail)
 	if err != nil {
 		return err
 	}

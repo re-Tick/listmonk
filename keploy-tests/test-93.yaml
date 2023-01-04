@@ -1,0 +1,59 @@
+version: api.keploy.io/v1beta1
+kind: Http
+name: test-93
+spec:
+    metadata: {}
+    req:
+        method: PUT
+        proto_major: 1
+        proto_minor: 1
+        url: /api/campaigns/12/status
+        header:
+            Accept: application/json, text/plain, */*
+            Accept-Encoding: gzip, deflate, br
+            Accept-Language: en-GB,en
+            Authorization: Basic bGlzdG1vbms6bGlzdG1vbms=
+            Connection: keep-alive
+            Content-Length: "20"
+            Content-Type: application/json
+            Cookie: connect.sid=s%3AdxWsE0jhYYsXQwFQKZJhtK_5Jli7MPB1.Wjbj0YQ3J7yJE1Zx21NQAWPtrz1f8i73j9FAnlvbrSg
+            Origin: http://localhost:9000
+            Referer: http://localhost:9000/admin/campaigns/12
+            Sec-Fetch-Dest: empty
+            Sec-Fetch-Mode: cors
+            Sec-Fetch-Site: same-origin
+            Sec-Gpc: "1"
+            User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36
+        body: '{"status":"running"}'
+    resp:
+        status_code: 200
+        header:
+            Content-Type: application/json; charset=UTF-8
+        body: |
+            {"data":{"id":12,"created_at":"2022-12-18T19:39:24.793843Z","updated_at":"2022-12-18T19:39:38.191486Z","views":0,"clicks":0,"bounces":0,"lists":[{"id":5,"name":"Ritik"},{"id":10,"name":"Sarthak"},{"id":11,"name":"qwerty"}],"started_at":null,"to_send":0,"sent":0,"uuid":"04bbef1c-6a50-48f3-9651-4457b20eb866","type":"regular","name":"qwertt2","subject":"keploy","from_email":"ritik@keploy.io","body":"\u003cp\u003egreetings\u003c/p\u003e","altbody":null,"send_at":null,"status":"running","content_type":"richtext","tags":[],"headers":[],"template_id":1,"messenger":"email"}}
+        status_message: ""
+        proto_major: 1
+        proto_minor: 1
+    objects:
+        - type: error
+          data: ""
+    mocks:
+        - test-93-0
+        - test-93-1
+        - test-93-2
+        - test-93-3
+        - test-93-4
+        - test-93-5
+        - test-93-6
+        - test-93-7
+        - test-93-8
+        - test-93-9
+        - test-93-10
+        - test-93-11
+        - test-93-12
+        - test-93-13
+        - test-93-14
+        - test-93-15
+    assertions:
+        noise: []
+    created: 1671392378
