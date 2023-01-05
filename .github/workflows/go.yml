@@ -22,8 +22,9 @@ jobs:
 
       - name: Install-Keploy
         run: |
-          make build
-          ./listmonk --new-config
+          cat config.toml.sample > config.toml
+#          make build
+#          ./listmonk --new-config
 
 
       - name: Test
