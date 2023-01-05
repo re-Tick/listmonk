@@ -33,8 +33,6 @@ jobs:
           sudo mv /tmp/keploy /usr/local/bin && keploy &
           cat config.toml
           make test
-        env:
-          KEPLOY_MODE: test
         
 #       - uses: codecov/codecov-action@v2
 #         with:
