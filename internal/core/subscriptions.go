@@ -5,9 +5,23 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/knadh/listmonk/models"
 	"github.com/labstack/echo/v4"
 	"github.com/lib/pq"
 )
+
+// GetSubscriptions retrieves the subscriptions for a subscriber.
+func (c *Core) GetSubscriptions(ctx context.Context, subID int, subUUID string, allLists bool) ([]models.Subscription, error) {
+	var out []models.Subscription
+	err := c.q.GetSubscriptions.SelectContext(ctx, &out, subID, subUUID, allLists)
+	if err != nil {
+		c.log.Printf("error getting subscriptions: %v", err)
+		return nil, echo.NewHTTPError(http.StatusInternalServerError,
+			c.i18n.Ts("globals.messages.errorFetching", "name", "{globals.terms.subscribers}", "error", err.Error()))
+	}
+
+	return out, err
+}
 
 // AddSubscriptions adds list subscriptions to subscribers.
 func (c *Core) AddSubscriptions(ctx context.Context, subIDs, listIDs []int, status string) error {
@@ -67,8 +81,8 @@ func (c *Core) DeleteSubscriptionsByQuery(ctx context.Context, query string, sou
 }
 
 // UnsubscribeLists sets list subscriptions to 'unsubscribed'.
-func (c *Core) UnsubscribeLists(ctx context.Context, subIDs, listIDs []int) error {
-	if _, err := c.q.UnsubscribeSubscribersFromLists.ExecContext(ctx, pq.Array(subIDs), pq.Array(listIDs)); err != nil {
+func (c *Core) UnsubscribeLists(ctx context.Context, subIDs, listIDs []int, listUUIDs []string) error {
+	if _, err := c.q.UnsubscribeSubscribersFromLists.ExecContext(ctx, pq.Array(subIDs), pq.Array(listIDs), pq.StringArray(listUUIDs)); err != nil {
 		c.log.Printf("error unsubscribing from lists: %v", err)
 		return echo.NewHTTPError(http.StatusInternalServerError,
 			c.i18n.Ts("globals.messages.errorUpdating", "name", "{globals.terms.subscribers}", "error", err.Error()))

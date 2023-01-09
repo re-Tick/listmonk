@@ -75,6 +75,7 @@ func install(ctx context.Context, lastVer string, db *sqlx.DB, fs stuffbin.FileS
 		models.ListTypePrivate,
 		models.ListOptinSingle,
 		pq.StringArray{"test"},
+		"",
 	); err != nil {
 		lo.Fatalf("error creating list: %v", err)
 	}
@@ -84,6 +85,7 @@ func install(ctx context.Context, lastVer string, db *sqlx.DB, fs stuffbin.FileS
 		models.ListTypePublic,
 		models.ListOptinDouble,
 		pq.StringArray{"test"},
+		"",
 	); err != nil {
 		lo.Fatalf("error creating list: %v", err)
 	}
@@ -124,6 +126,17 @@ func install(ctx context.Context, lastVer string, db *sqlx.DB, fs stuffbin.FileS
 		lo.Fatalf("error setting default template: %v", err)
 	}
 
+	// Default campaign archive template.
+	archiveTpl, err := fs.Get("/static/email-templates/default-archive.tpl")
+	if err != nil {
+		lo.Fatalf("error reading default archive template: %v", err)
+	}
+
+	var archiveTplID int
+	if err := q.CreateTemplate.Get(&archiveTplID, "Default archive template", models.TemplateTypeCampaign, "", archiveTpl.ReadBytes()); err != nil {
+		lo.Fatalf("error creating default campaign template: %v", err)
+	}
+
 	// Sample campaign.
 	if _, err := q.CreateCampaign.ExecContext(ctx, uuid.Must(uuid.NewV4()),
 		models.CampaignTypeRegular,
@@ -146,6 +159,9 @@ func install(ctx context.Context, lastVer string, db *sqlx.DB, fs stuffbin.FileS
 		emailMsgr,
 		campTplID,
 		pq.Int64Array{1},
+		false,
+		archiveTplID,
+		`{"name": "Subscriber"}`,
 	); err != nil {
 		lo.Fatalf("error creating sample campaign: %v", err)
 	}

@@ -77,19 +77,29 @@ func (c *Core) GetList(ctx context.Context, id int, uuid string) (models.List, e
 		uu = uuid
 	}
 
-	var out []models.List
+	var res []models.List
 	queryStr, stmt := makeSearchQuery("", "", "", c.q.QueryLists)
-	if err := c.db.SelectContext(ctx, &out, stmt, id, uu, queryStr, 0, 1); err != nil {
+	if err := c.db.SelectContext(ctx, &res, stmt, id, uu, queryStr, 0, 1); err != nil {
 		c.log.Printf("error fetching lists: %v", err)
 		return models.List{}, echo.NewHTTPError(http.StatusInternalServerError,
 			c.i18n.Ts("globals.messages.errorFetching", "name", "{globals.terms.lists}", "error", pqErrMsg(err)))
 	}
 
-	if len(out) == 1 {
-		return out[0], nil
+	if len(res) == 0 {
+		return models.List{}, echo.NewHTTPError(http.StatusBadRequest,
+			c.i18n.Ts("globals.messages.notFound", "name", "{globals.terms.list}"))
 	}
 
-	return models.List{}, nil
+	out := res[0]
+	if out.Tags == nil {
+		out.Tags = []string{}
+	}
+	// Total counts.
+	for _, c := range out.SubscriberCounts {
+		out.SubscriberCount += c
+	}
+
+	return out, nil
 }
 
 // GetListsByOptin returns lists by optin type.
@@ -123,7 +133,7 @@ func (c *Core) CreateList(ctx context.Context, l models.List) (models.List, erro
 	// Insert and read ID.
 	var newID int
 	l.UUID = uu.String()
-	if err := c.q.CreateList.GetContext(ctx, &newID, l.UUID, l.Name, l.Type, l.Optin, pq.StringArray(normalizeTags(l.Tags))); err != nil {
+	if err := c.q.CreateList.GetContext(ctx, &newID, l.UUID, l.Name, l.Type, l.Optin, pq.StringArray(normalizeTags(l.Tags)), l.Description); err != nil {
 		c.log.Printf("error creating list: %v", err)
 		return models.List{}, echo.NewHTTPError(http.StatusInternalServerError,
 			c.i18n.Ts("globals.messages.errorCreating", "name", "{globals.terms.list}", "error", pqErrMsg(err)))
@@ -134,7 +144,7 @@ func (c *Core) CreateList(ctx context.Context, l models.List) (models.List, erro
 
 // UpdateList updates a given list.
 func (c *Core) UpdateList(ctx context.Context, id int, l models.List) (models.List, error) {
-	res, err := c.q.UpdateList.ExecContext(ctx, id, l.Name, l.Type, l.Optin, pq.StringArray(normalizeTags(l.Tags)))
+	res, err := c.q.UpdateList.ExecContext(ctx, id, l.Name, l.Type, l.Optin, pq.StringArray(normalizeTags(l.Tags)), l.Description)
 	if err != nil {
 		c.log.Printf("error updating list: %v", err)
 		return models.List{}, echo.NewHTTPError(http.StatusInternalServerError,

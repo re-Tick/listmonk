@@ -17,6 +17,9 @@ const (
 	CampaignAnalyticsViews   = "views"
 	CampaignAnalyticsClicks  = "clicks"
 	CampaignAnalyticsBounces = "bounces"
+
+	campaignTplDefault = "default"
+	campaignTplArchive = "archive"
 )
 
 // QueryCampaigns retrieves paginated campaigns optionally filtering them by the given arbitrary
@@ -60,6 +63,28 @@ func (c *Core) QueryCampaigns(ctx context.Context, searchStr string, statuses []
 
 // GetCampaign retrieves a campaign.
 func (c *Core) GetCampaign(ctx context.Context, id int, uuid string) (models.Campaign, error) {
+	return c.getCampaign(ctx, id, uuid, campaignTplDefault)
+}
+
+// GetArchivedCampaign retreives a campaign with the archive template body.
+func (c *Core) GetArchivedCampaign(ctx context.Context, id int, uuid string) (models.Campaign, error) {
+	out, err := c.getCampaign(ctx, id, uuid, campaignTplArchive)
+	if err != nil {
+		return out, err
+	}
+
+	if !out.Archive {
+		return models.Campaign{}, echo.NewHTTPError(http.StatusBadRequest,
+			c.i18n.Ts("globals.messages.notFound", "name", "{globals.terms.campaign}"))
+	}
+
+	return out, nil
+}
+
+// getCampaign retrieves a campaign. If typlType=default, then the campaign's
+// template body is returned as "template_body". If tplType="archive",
+// the archive template is returned.
+func (c *Core) getCampaign(ctx context.Context, id int, uuid string, tplType string) (models.Campaign, error) {
 	// Unsafe to ignore scanning fields not present in models.Campaigns.
 	var uu interface{}
 	if uuid != "" {
@@ -67,7 +92,7 @@ func (c *Core) GetCampaign(ctx context.Context, id int, uuid string) (models.Cam
 	}
 
 	var out models.Campaigns
-	if err := c.q.GetCampaign.SelectContext(ctx, &out, id, uu); err != nil {
+	if err := c.q.GetCampaign.SelectContext(ctx, &out, id, uu, tplType); err != nil {
 		// if err := c.db.Select(&out, stmt, 0, pq.Array([]string{}), queryStr, 0, 1); err != nil {
 		c.log.Printf("error fetching campaign: %v", err)
 		return models.Campaign{}, echo.NewHTTPError(http.StatusInternalServerError,
@@ -77,7 +102,6 @@ func (c *Core) GetCampaign(ctx context.Context, id int, uuid string) (models.Cam
 	if len(out) == 0 {
 		return models.Campaign{}, echo.NewHTTPError(http.StatusBadRequest,
 			c.i18n.Ts("globals.messages.notFound", "name", "{globals.terms.campaign}"))
-
 	}
 
 	for i := 0; i < len(out); i++ {
@@ -114,6 +138,23 @@ func (c *Core) GetCampaignForPreview(ctx context.Context, id, tplID int) (models
 	return out, nil
 }
 
+// GetArchivedCampaigns retrieves campaigns with a template body.
+func (c *Core) GetArchivedCampaigns(offset, limit int) (models.Campaigns, int, error) {
+	var out models.Campaigns
+	if err := c.q.GetArchivedCampaigns.Select(&out, offset, limit); err != nil {
+		c.log.Printf("error fetching public campaigns: %v", err)
+		return models.Campaigns{}, 0, echo.NewHTTPError(http.StatusInternalServerError,
+			c.i18n.Ts("globals.messages.errorFetching", "name", "{globals.terms.campaign}", "error", pqErrMsg(err)))
+	}
+
+	total := 0
+	if len(out) > 0 {
+		total = out[0].Total
+	}
+
+	return out, total, nil
+}
+
 // CreateCampaign creates a new campaign.
 func (c *Core) CreateCampaign(ctx context.Context, o models.Campaign, listIDs []int) (models.Campaign, error) {
 	uu, err := uuid.NewV4()
@@ -140,6 +181,9 @@ func (c *Core) CreateCampaign(ctx context.Context, o models.Campaign, listIDs []
 		o.Messenger,
 		o.TemplateID,
 		pq.Array(listIDs),
+		o.Archive,
+		o.ArchiveTemplateID,
+		o.ArchiveMeta,
 	); err != nil {
 		if err == sql.ErrNoRows {
 			return models.Campaign{}, echo.NewHTTPError(http.StatusBadRequest, c.i18n.T("campaigns.noSubs"))
@@ -173,7 +217,10 @@ func (c *Core) UpdateCampaign(ctx context.Context, id int, o models.Campaign, li
 		pq.StringArray(normalizeTags(o.Tags)),
 		o.Messenger,
 		o.TemplateID,
-		pq.Array(listIDs))
+		pq.Array(listIDs),
+		o.Archive,
+		o.ArchiveTemplateID,
+		o.ArchiveMeta)
 	if err != nil {
 		c.log.Printf("error updating campaign: %v", err)
 		return models.Campaign{}, echo.NewHTTPError(http.StatusInternalServerError,
@@ -242,6 +289,18 @@ func (c *Core) UpdateCampaignStatus(ctx context.Context, id int, status string) 
 
 	cm.Status = status
 	return cm, nil
+}
+
+// UpdateCampaignArchive updates a campaign's archive properties.
+func (c *Core) UpdateCampaignArchive(id int, enabled bool, tplID int, meta models.JSON) error {
+	if _, err := c.q.UpdateCampaignArchive.Exec(id, enabled, tplID, meta); err != nil {
+		c.log.Printf("error updating campaign: %v", err)
+
+		return echo.NewHTTPError(http.StatusInternalServerError,
+			c.i18n.Ts("globals.messages.errorUpdating", "name", "{globals.terms.campaign}", "error", pqErrMsg(err)))
+	}
+
+	return nil
 }
 
 // DeleteCampaign deletes a campaign.

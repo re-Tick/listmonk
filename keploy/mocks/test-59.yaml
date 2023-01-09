@@ -1,0 +1,61 @@
+version: api.keploy.io/v1beta1
+kind: Generic
+name: test-59-0
+spec:
+    metadata:
+        name: SQL
+        operation: BeginTx
+        options: '{0 true}'
+        type: SQL_DB
+    objects:
+        - type: '*keploy.KError'
+          data: H4sIAAAAAAAA/+L638jKyPS/hYGBgfV/EwMjIyAAAP//ngbw8hEAAAA=
+---
+version: api.keploy.io/v1beta1
+kind: SQL
+name: test-59-1
+spec:
+    metadata:
+        arguments: '[{ 1 {}}]'
+        name: SQL
+        operation: QueryContext
+        query: '"SELECT COUNT(*) AS total FROM subscribers LEFT JOIN subscriber_lists ON ( (CASE WHEN CARDINALITY($1::INT[]) > 0 THEN true ELSE false END) AND subscriber_lists.subscriber_id = subscribers.id ) WHERE (CARDINALITY($1) = 0 OR subscriber_lists.list_id = ANY($1::INT[])) ;"'
+        type: SQL_DB
+    type: error
+    int: 0
+    error:
+        - nil
+---
+version: api.keploy.io/v1beta1
+kind: SQL
+name: test-59-2
+spec:
+    metadata:
+        name: SQL
+        operation: QueryContext.Close
+        type: SQL_DB
+    type: table
+    table:
+        cols:
+            - name: total
+              type: int64
+              precision: 0
+              scale: 0
+        rows:
+            - '[`0` | ]'
+    int: 0
+    error:
+        - nil
+        - nil
+---
+version: api.keploy.io/v1beta1
+kind: Generic
+name: test-59-3
+spec:
+    metadata:
+        name: SQL
+        operation: BeginTx.Rollback
+        type: SQL_DB
+    objects:
+        - type: '*keploy.KError'
+          data: H4sIAAAAAAAA/+L638jKyPS/hYGBgfV/EwMjIyAAAP//ngbw8hEAAAA=

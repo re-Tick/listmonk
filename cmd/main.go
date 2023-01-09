@@ -26,6 +26,7 @@ import (
 	"github.com/knadh/listmonk/internal/messenger"
 	"github.com/knadh/listmonk/internal/subimporter"
 	"github.com/knadh/listmonk/models"
+	"github.com/knadh/paginator"
 	"github.com/knadh/stuffbin"
 )
 
@@ -47,6 +48,7 @@ type App struct {
 	media      media.Store
 	i18n       *i18n.I18n
 	bounce     *bounce.Manager
+	paginator  *paginator.Paginator
 	notifTpls  *notifTpls
 	log        *log.Logger
 	bufLog     *buflog.BufLog
@@ -114,7 +116,7 @@ func init() {
 	MakeFunctionRunOnRootFolder()
 	kApp = keploy.New(keploy.Config{
 		App: keploy.AppConfig{
-			Name:    "listmonk-app",
+			Name:    "listmonk-app-1",
 			Port:    "9000",
 			Timeout: time.Hour,
 			Delay:   6 * time.Second,
@@ -211,6 +213,15 @@ func main() {
 		messengers: make(map[string]messenger.Messenger),
 		log:        lo,
 		bufLog:     bufLog,
+
+		paginator: paginator.New(paginator.Opt{
+			DefaultPerPage: 20,
+			MaxPerPage:     50,
+			NumPageNums:    10,
+			PageParam:      "page",
+			PerPageParam:   "per_page",
+			AllowAll:       true,
+		}),
 	}
 
 	// Load i18n language map.

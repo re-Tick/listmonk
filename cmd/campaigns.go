@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"html/template"
@@ -52,7 +53,7 @@ var (
 func handleGetCampaigns(c echo.Context) error {
 	var (
 		app = c.Get("app").(*App)
-		pg  = getPagination(c.QueryParams(), 20)
+		pg  = app.paginator.NewFromURL(c.Request().URL.Query())
 
 		status    = c.QueryParams()["status"]
 		query     = strings.TrimSpace(c.FormValue("query"))
@@ -216,6 +217,9 @@ func handleCreateCampaign(c echo.Context) error {
 		o = c
 	}
 
+	if o.ArchiveTemplateID == 0 {
+		o.ArchiveTemplateID = o.TemplateID
+	}
 	out, err := app.core.CreateCampaign(c.Request().Context(), o.Campaign, o.ListIDs)
 	if err != nil {
 		return err
@@ -293,6 +297,31 @@ func handleUpdateCampaignStatus(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, okResp{out})
+}
+
+// handleUpdateCampaignArchive handles campaign status modification.
+func handleUpdateCampaignArchive(c echo.Context) error {
+	var (
+		app   = c.Get("app").(*App)
+		id, _ = strconv.Atoi(c.Param("id"))
+	)
+
+	req := struct {
+		Archive    bool        `json:"archive"`
+		TemplateID int         `json:"archive_template_id"`
+		Meta       models.JSON `json:"archive_meta"`
+	}{}
+
+	// Get and validate fields.
+	if err := c.Bind(&req); err != nil {
+		return err
+	}
+
+	if err := app.core.UpdateCampaignArchive(id, req.Archive, req.TemplateID, req.Meta); err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, okResp{true})
 }
 
 // handleDeleteCampaign handles campaign deletion.
@@ -528,6 +557,10 @@ func validateCampaignFields(ctx context.Context, c campaignReq, app *App) (campa
 
 	if len(c.Headers) == 0 {
 		c.Headers = make([]map[string]string, 0)
+	}
+
+	if len(c.ArchiveMeta) == 0 {
+		c.ArchiveMeta = json.RawMessage("{}")
 	}
 
 	return c, nil

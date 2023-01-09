@@ -34,7 +34,8 @@ func (c *Core) GetSubscriber(ctx context.Context, id int, uuid, email string) (m
 	}
 	if len(out) == 0 {
 		return models.Subscriber{}, echo.NewHTTPError(http.StatusBadRequest,
-			c.i18n.Ts("globals.messages.notFound", "name", "{globals.terms.subscriber}"))
+			c.i18n.Ts("globals.messages.notFound", "name",
+				fmt.Sprintf("{globals.terms.subscriber} (%d: %s%s)", id, uuid, email)))
 	}
 	if err := out.LoadLists(ctx, c.q.GetSubscriberListsLazy); err != nil {
 		c.log.Printf("error loading subscriber lists: %v", err)
@@ -113,7 +114,8 @@ func (c *Core) QuerySubscribers(ctx context.Context, query string, listIDs []int
 
 	// Run the query again and fetch the actual data. stmt is the raw SQL query.
 	var out models.Subscribers
-	stmt = fmt.Sprintf(c.q.QuerySubscribers, cond, orderBy, order)
+	stmt = strings.ReplaceAll(c.q.QuerySubscribers, "%query%", cond)
+	stmt = strings.ReplaceAll(stmt, "%order%", orderBy+" "+order)
 	if err := tx.SelectContext(ctx, &out, stmt, pq.Array(listIDs), offset, limit); err != nil {
 		return nil, 0, echo.NewHTTPError(http.StatusInternalServerError,
 			c.i18n.Ts("globals.messages.errorFetching", "name", "{globals.terms.subscribers}", "error", pqErrMsg(err)))
@@ -186,6 +188,7 @@ func (c *Core) ExportSubscribers(ctx context.Context, query string, subIDs, list
 	}
 
 	stmt := fmt.Sprintf(c.q.QuerySubscribersForExport, cond)
+	stmt = strings.ReplaceAll(c.q.QuerySubscribersForExport, "%query%", cond)
 
 	// Verify that the arbitrary SQL search expression is read only.
 	if cond != "" {
@@ -302,12 +305,7 @@ func (c *Core) InsertSubscriber(ctx context.Context, sub models.Subscriber, list
 }
 
 // UpdateSubscriber updates a subscriber's properties.
-func (c *Core) UpdateSubscriber(ctx context.Context, id int, sub models.Subscriber, listIDs []int, listUUIDs []string, preconfirm bool) (models.Subscriber, error) {
-	subStatus := models.SubscriptionStatusUnconfirmed
-	if preconfirm {
-		subStatus = models.SubscriptionStatusConfirmed
-	}
-
+func (c *Core) UpdateSubscriber(ctx context.Context, id int, sub models.Subscriber) (models.Subscriber, error) {
 	// Format raw JSON attributes.
 	attribs := []byte("{}")
 	if len(sub.Attribs) > 0 {
@@ -325,14 +323,55 @@ func (c *Core) UpdateSubscriber(ctx context.Context, id int, sub models.Subscrib
 		strings.TrimSpace(sub.Name),
 		sub.Status,
 		json.RawMessage(attribs),
-		pq.Array(listIDs),
-		pq.Array(listUUIDs),
-		subStatus)
+	)
 	if err != nil {
 		c.log.Printf("error updating subscriber: %v", err)
 		return models.Subscriber{}, echo.NewHTTPError(http.StatusInternalServerError,
-			c.i18n.Ts("globals.messages.errorUpdating",
-				"name", "{globals.terms.subscriber}", "error", pqErrMsg(err)))
+			c.i18n.Ts("globals.messages.errorUpdating", "name", "{globals.terms.subscriber}", "error", pqErrMsg(err)))
+	}
+
+	out, err := c.GetSubscriber(ctx, sub.ID, "", sub.Email)
+	if err != nil {
+		return models.Subscriber{}, err
+	}
+
+	return out, nil
+}
+
+// UpdateSubscriberWithLists updates a subscriber's properties.
+// If deleteLists is set to true, all existing subscriptions are deleted and only
+// the ones provided are added or retained.
+func (c *Core) UpdateSubscriberWithLists(ctx context.Context, id int, sub models.Subscriber, listIDs []int, listUUIDs []string, preconfirm, deleteLists bool) (models.Subscriber, error) {
+	subStatus := models.SubscriptionStatusUnconfirmed
+	if preconfirm {
+		subStatus = models.SubscriptionStatusConfirmed
+	}
+
+	// Format raw JSON attributes.
+	attribs := []byte("{}")
+	if len(sub.Attribs) > 0 {
+		if b, err := json.Marshal(sub.Attribs); err != nil {
+			return models.Subscriber{}, echo.NewHTTPError(http.StatusInternalServerError,
+				c.i18n.Ts("globals.messages.errorUpdating",
+					"name", "{globals.terms.subscriber}", "error", err.Error()))
+		} else {
+			attribs = b
+		}
+	}
+
+	_, err := c.q.UpdateSubscriberWithLists.ExecContext(ctx, id,
+		sub.Email,
+		strings.TrimSpace(sub.Name),
+		sub.Status,
+		json.RawMessage(attribs),
+		pq.Array(listIDs),
+		pq.Array(listUUIDs),
+		subStatus,
+		deleteLists)
+	if err != nil {
+		c.log.Printf("error updating subscriber: %v", err)
+		return models.Subscriber{}, echo.NewHTTPError(http.StatusInternalServerError,
+			c.i18n.Ts("globals.messages.errorUpdating", "name", "{globals.terms.subscriber}", "error", pqErrMsg(err)))
 	}
 
 	out, err := c.GetSubscriber(ctx, sub.ID, "", sub.Email)
