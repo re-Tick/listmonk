@@ -7,31 +7,28 @@ spec:
         method: PUT
         proto_major: 1
         proto_minor: 1
-        url: /api/subscribers/blocklist
+        url: /api/subscribers/query/lists
         header:
-            Accept: application/json, text/plain, */*
+            Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
             Accept-Encoding: gzip, deflate, br
-            Accept-Language: en-GB,en
             Authorization: Basic bGlzdG1vbms6bGlzdG1vbms=
             Connection: keep-alive
-            Content-Length: "12"
+            Content-Length: "77"
             Content-Type: application/json
             Cookie: connect.sid=s%3AdxWsE0jhYYsXQwFQKZJhtK_5Jli7MPB1.Wjbj0YQ3J7yJE1Zx21NQAWPtrz1f8i73j9FAnlvbrSg
-            Origin: http://localhost:9000
-            Referer: http://localhost:9000/admin/subscribers
-            Sec-Fetch-Dest: empty
-            Sec-Fetch-Mode: cors
+            Postman-Token: d1744d04-33dc-4492-926d-01bbfc48c055
+            Sec-Fetch-Dest: iframe
+            Sec-Fetch-Mode: navigate
             Sec-Fetch-Site: same-origin
-            Sec-Gpc: "1"
-            User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36
-        body: '{"ids":[17]}'
+            Sec-Gpc: '"1"'
+            Upgrade-Insecure-Requests: '"1"'
+        body: '{"action":"unsubscribed","list_ids":null,"target_list_ids":[5],"ids":[23,22]}'
         body_type: ""
     resp:
-        status_code: 200
+        status_code: 400
         header:
             Content-Type: application/json; charset=UTF-8
-        body: |
-            {"data":true}
+        body: Invalid action.
         body_type: ""
         status_message: ""
         proto_major: 1
@@ -39,13 +36,6 @@ spec:
     objects:
         - type: error
           data: ""
-    mocks:
-        - test-43-0
-        - test-43-1
-        - test-43-2
-        - test-43-3
-        - test-43-4
-        - test-43-5
     assertions:
         noise: []
-    created: 1671366116
+    created: 1671391126

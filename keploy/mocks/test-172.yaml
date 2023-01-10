@@ -5,7 +5,7 @@ spec:
     metadata:
         name: SQL
         operation: PrepareContext
-        query: '"SELECT * FROM lists WHERE (CASE WHEN $1 = '''' THEN 1=1 ELSE type=$1::list_type END) ORDER BY CASE WHEN $2 = ''id'' THEN id END, CASE WHEN $2 = ''name'' THEN name END;"'
+        query: '"WITH optins AS ( SELECT id FROM lists WHERE optin = ''double'' ) DELETE FROM subscriber_lists WHERE status = ''unconfirmed'' AND list_id IN (SELECT id FROM optins) AND created_at < $1;"'
         type: SQL_DB
     type: error
     int: 0
@@ -21,17 +21,18 @@ spec:
         operation: PrepareContext.NumInput
         type: SQL_DB
     type: int
-    int: 2
-    error: []
+    int: 1
+    error:
+        - nil
 ---
 version: api.keploy.io/v1beta1
 kind: SQL
 name: test-172-2
 spec:
     metadata:
-        arguments: '[{ 1 public} { 2 id}]'
+        arguments: '[{ 1 2022-12-28 05:04:05 +0000 UTC}]'
         name: SQL
-        operation: QueryContext
+        operation: ExecContext
         type: SQL_DB
     type: error
     int: 0
@@ -43,58 +44,32 @@ kind: SQL
 name: test-172-3
 spec:
     metadata:
+        arguments: '[{ 1 2022-12-28 05:04:05 +0000 UTC}]'
         name: SQL
-        operation: QueryContext.Close
+        operation: ExecContext.LastInsertId
         type: SQL_DB
-    type: table
-    table:
-        cols:
-            - name: id
-              type: int64
-              precision: 0
-              scale: 0
-            - name: uuid
-              type: '[]uint8'
-              precision: 0
-              scale: 0
-            - name: name
-              type: string
-              precision: 0
-              scale: 0
-            - name: type
-              type: '[]uint8'
-              precision: 0
-              scale: 0
-            - name: optin
-              type: '[]uint8'
-              precision: 0
-              scale: 0
-            - name: tags
-              type: '[]uint8'
-              precision: 0
-              scale: 0
-            - name: created_at
-              type: time.Time
-              precision: 0
-              scale: 0
-            - name: updated_at
-              type: time.Time
-              precision: 0
-              scale: 0
-        rows:
-            - '[`1` | `[52 50 49 99 102 51 53 56 45 102 54 56 51 45 52 53 101 55 45 97 52 50 55 45 57 99 101 55 100 50 98 102 50 97 57 101]` | `Default list` | `[112 117 98 108 105 99]` | `[115 105 110 103 108 101]` | `[123 116 101 115 116 125]` | `"2022-12-22T09:02:16.914578Z"` | `"2022-12-22T10:32:27.634823Z"` | ]'
-            - '[`2` | `[55 98 53 102 57 49 51 100 45 57 100 55 53 45 52 49 51 101 45 57 97 54 50 45 57 57 50 57 97 51 99 52 53 97 49 98]` | `Opt-in list` | `[112 117 98 108 105 99]` | `[100 111 117 98 108 101]` | `[123 116 101 115 116 125]` | `"2022-12-22T09:02:16.915513Z"` | `"2022-12-22T09:02:16.915513Z"` | ]'
-            - '[`2` | `[55 98 53 102 57 49 51 100 45 57 100 55 53 45 52 49 51 101 45 57 97 54 50 45 57 57 50 57 97 51 99 52 53 97 49 98]` | `Opt-in list` | `[112 117 98 108 105 99]` | `[100 111 117 98 108 101]` | `[123 116 101 115 116 125]` | `"2022-12-22T09:02:16.915513Z"` | `"2022-12-22T09:02:16.915513Z"` | ]'
+    type: int
     int: 0
     error:
-        - nil
-        - nil
-        - EOF
-        - nil
+        - LastInsertId is not supported by this driver
 ---
 version: api.keploy.io/v1beta1
 kind: SQL
 name: test-172-4
+spec:
+    metadata:
+        arguments: '[{ 1 2022-12-28 05:04:05 +0000 UTC}]'
+        name: SQL
+        operation: ExecContext.RowsAffected
+        type: SQL_DB
+    type: int
+    int: 0
+    error:
+        - nil
+---
+version: api.keploy.io/v1beta1
+kind: SQL
+name: test-172-5
 spec:
     metadata:
         name: SQL

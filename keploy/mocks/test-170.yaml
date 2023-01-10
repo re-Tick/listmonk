@@ -5,7 +5,7 @@ spec:
     metadata:
         name: SQL
         operation: PrepareContext
-        query: '"WITH view AS ( SELECT campaigns.id as campaign_id, subscribers.id AS subscriber_id FROM campaigns LEFT JOIN subscribers ON (CASE WHEN $2::TEXT != '''' THEN subscribers.uuid = $2::UUID ELSE FALSE END) WHERE campaigns.uuid = $1 ) INSERT INTO campaign_views (campaign_id, subscriber_id) VALUES((SELECT campaign_id FROM view), (SELECT subscriber_id FROM view));"'
+        query: '"DELETE FROM bounces WHERE CARDINALITY($1::INT[]) = 0 OR id = ANY($1);"'
         type: SQL_DB
     type: error
     int: 0
@@ -21,15 +21,16 @@ spec:
         operation: PrepareContext.NumInput
         type: SQL_DB
     type: int
-    int: 2
-    error: []
+    int: 1
+    error:
+        - nil
 ---
 version: api.keploy.io/v1beta1
 kind: SQL
 name: test-170-2
 spec:
     metadata:
-        arguments: '[{ 1 e6152472-56ca-4e3e-b086-ea8bfb70c0c3} { 2 }]'
+        arguments: '[{ 1 {2}}]'
         name: SQL
         operation: ExecContext
         type: SQL_DB
@@ -43,7 +44,7 @@ kind: SQL
 name: test-170-3
 spec:
     metadata:
-        arguments: '[{ 1 e6152472-56ca-4e3e-b086-ea8bfb70c0c3} { 2 }]'
+        arguments: '[{ 1 {2}}]'
         name: SQL
         operation: ExecContext.LastInsertId
         type: SQL_DB
@@ -57,7 +58,7 @@ kind: SQL
 name: test-170-4
 spec:
     metadata:
-        arguments: '[{ 1 e6152472-56ca-4e3e-b086-ea8bfb70c0c3} { 2 }]'
+        arguments: '[{ 1 {2}}]'
         name: SQL
         operation: ExecContext.RowsAffected
         type: SQL_DB

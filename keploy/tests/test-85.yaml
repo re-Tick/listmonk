@@ -28,7 +28,7 @@ spec:
         header:
             Content-Type: application/json; charset=UTF-8
         body: |
-            {"data":[]}
+            {"data":[{"id":12,"status":"running","to_send":0,"sent":0,"started_at":null,"updated_at":"2022-12-18T19:39:38.256064Z","rate":0,"net_rate":0},{"id":13,"status":"running","to_send":0,"sent":0,"started_at":null,"updated_at":"2022-12-18T19:40:05.387203Z","rate":0,"net_rate":0}]}
         body_type: ""
         status_message: ""
         proto_major: 1
@@ -44,4 +44,4 @@ spec:
         - test-85-4
     assertions:
         noise: []
-    created: 1671392325
+    created: 1671392408

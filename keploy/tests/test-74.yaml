@@ -7,7 +7,7 @@ spec:
         method: GET
         proto_major: 1
         proto_minor: 1
-        url: /api/campaigns/running/stats
+        url: /api/campaigns/analytics/views?id=12&from=2022-12-11T18%3A30%3A00.752Z&to=2022-12-19T18%3A29%3A00.752Z
         header:
             Accept: application/json, text/plain, */*
             Accept-Encoding: gzip, deflate, br
@@ -15,7 +15,7 @@ spec:
             Authorization: Basic bGlzdG1vbms6bGlzdG1vbms=
             Connection: keep-alive
             Cookie: connect.sid=s%3AdxWsE0jhYYsXQwFQKZJhtK_5Jli7MPB1.Wjbj0YQ3J7yJE1Zx21NQAWPtrz1f8i73j9FAnlvbrSg
-            Referer: http://localhost:9000/admin/campaigns
+            Referer: http://localhost:9000/admin/campaigns/analytics?id=12
             Sec-Fetch-Dest: empty
             Sec-Fetch-Mode: cors
             Sec-Fetch-Site: same-origin
@@ -44,4 +44,4 @@ spec:
         - test-74-4
     assertions:
         noise: []
-    created: 1671391886
+    created: 1671392382

@@ -50,19 +50,19 @@ spec:
     table:
         cols:
             - name: id
-              type: <nil>
+              type: int64
               precision: 0
               scale: 0
             - name: status
-              type: <nil>
+              type: '[]uint8'
               precision: 0
               scale: 0
             - name: to_send
-              type: <nil>
+              type: int64
               precision: 0
               scale: 0
             - name: sent
-              type: <nil>
+              type: int64
               precision: 0
               scale: 0
             - name: started_at
@@ -70,13 +70,15 @@ spec:
               precision: 0
               scale: 0
             - name: updated_at
-              type: <nil>
+              type: time.Time
               precision: 0
               scale: 0
         rows:
-            - '[`<nil>` | `<nil>` | `<nil>` | `<nil>` | `<nil>` | `<nil>` | ]'
+            - '[`12` | `[114 117 110 110 105 110 103]` | `0` | `0` | `<nil>` | `"2022-12-18T19:39:38.256064Z"` | ]'
+            - '[`12` | `[114 117 110 110 105 110 103]` | `0` | `0` | `<nil>` | `"2022-12-18T19:39:38.256064Z"` | ]'
     int: 0
     error:
+        - nil
         - EOF
         - nil
 ---

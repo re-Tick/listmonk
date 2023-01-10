@@ -4,33 +4,32 @@ name: test-170
 spec:
     metadata: {}
     req:
-        method: GET
+        method: DELETE
         proto_major: 1
         proto_minor: 1
-        url: /campaign/e6152472-56ca-4e3e-b086-ea8bfb70c0c3/59558b84-1575-4dc9-b7d8-93b0b7b54849/px.png
+        url: /api/bounces?id=2
         header:
             Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
             Accept-Encoding: gzip, deflate, br
-            Accept-Language: en-GB,en
             Authorization: Basic bGlzdG1vbms6bGlzdG1vbms=
             Connection: keep-alive
+            Content-Length: "77"
+            Content-Type: application/json
             Cookie: connect.sid=s%3AdxWsE0jhYYsXQwFQKZJhtK_5Jli7MPB1.Wjbj0YQ3J7yJE1Zx21NQAWPtrz1f8i73j9FAnlvbrSg
-            Sec-Fetch-Dest: document
+            Postman-Token: 55fb3b15-ad91-4e1c-b93d-0afe080258c3
+            Sec-Fetch-Dest: iframe
             Sec-Fetch-Mode: navigate
-            Sec-Fetch-Site: none
-            Sec-Fetch-User: ?1
-            Sec-Gpc: "1"
-            Upgrade-Insecure-Requests: "1"
-            User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36
-        body: ""
+            Sec-Fetch-Site: same-origin
+            Sec-Gpc: '"1"'
+            Upgrade-Insecure-Requests: '"1"'
+        body: "{\n    \"source\": \"api\", \n    \"type\": \"hard\",\n    \"email\": \"john@example.com\"\n}"
         body_type: ""
     resp:
         status_code: 200
         header:
-            Cache-Control: no-cache
-            Content-Type: image/png
-            X-Robots-Tag: noindex
-        body: "�PNG\r\n\x1A\n\0\0\0\rIHDR\0\0\0\x0E\0\0\0\x03\b\x06\0\0\0��>\x0F\0\0\0\x12IDATx�bb \x13�_# \0\0��\x03W\0\a�F~�\0\0\0\0IEND�B`�"
+            Content-Type: application/json; charset=UTF-8
+        body: |
+            {"data":true}
         body_type: ""
         status_message: ""
         proto_major: 1
@@ -47,4 +46,4 @@ spec:
         - test-170-5
     assertions:
         noise: []
-    created: 1671711556
+    created: 1672143718

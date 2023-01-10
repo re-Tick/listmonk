@@ -4,18 +4,17 @@ name: test-17
 spec:
     metadata: {}
     req:
-        method: POST
+        method: DELETE
         proto_major: 1
         proto_minor: 1
-        url: /api/settings/smtp/test
+        url: /api/bounces
         header:
             Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
             Accept-Encoding: gzip, deflate, br
             Authorization: Basic bGlzdG1vbms6bGlzdG1vbms=
             Connection: keep-alive
-            Content-Length: "0"
             Cookie: connect.sid=s%3AdxWsE0jhYYsXQwFQKZJhtK_5Jli7MPB1.Wjbj0YQ3J7yJE1Zx21NQAWPtrz1f8i73j9FAnlvbrSg
-            Postman-Token: f2a7d0a4-8611-4707-a217-d0e44ab3188f
+            Postman-Token: ff726a2d-ad7b-4497-98e3-b57783254c86
             Sec-Fetch-Dest: iframe
             Sec-Fetch-Mode: navigate
             Sec-Fetch-Site: same-origin
@@ -27,7 +26,7 @@ spec:
         status_code: 400
         header:
             Content-Type: application/json; charset=UTF-8
-        body: Internal server error
+        body: Invalid ID(s)
         body_type: ""
         status_message: ""
         proto_major: 1
@@ -37,4 +36,4 @@ spec:
           data: ""
     assertions:
         noise: []
-    created: 1671362630
+    created: 1671363234

@@ -4,34 +4,36 @@ name: test-127
 spec:
     metadata: {}
     req:
-        method: PUT
+        method: POST
         proto_major: 1
         proto_minor: 1
-        url: /api/templates/1
+        url: /subscription/optin/59558b84-1575-4dc9-b7d8-93b0b7b54849
         header:
-            Accept: application/json, text/plain, */*
+            Accept: '*/*'
             Accept-Encoding: gzip, deflate, br
-            Accept-Language: en-GB,en
-            Authorization: Basic bGlzdG1vbms6bGlzdG1vbms=
             Connection: keep-alive
-            Content-Length: "3433"
-            Content-Type: application/json
-            Cookie: connect.sid=s%3AdxWsE0jhYYsXQwFQKZJhtK_5Jli7MPB1.Wjbj0YQ3J7yJE1Zx21NQAWPtrz1f8i73j9FAnlvbrSg
-            Origin: http://localhost:9000
-            Referer: http://localhost:9000/admin/campaigns/templates
+            Content-Length: "0"
+            Content-Type: application/x-www-form-urlencoded
+            Cookie: csrftoken=KHNn1HMfuB56B2HJvlQg3GX7IKDMR5wg; ds_user_id=12608305791; datr=G_cBY-eiHYOpLvtb_4EfpTZj; mid=YxTHAAAEAAEft1yRGZ-XcZQjkBE9; ig_did=C161811E-DBDC-48E1-8FC1-E0EC6572E0BE; dpr=2; shbid="15172\05412608305791\0541702918136:01f7382caa12901419faebce28a97c3ad17d4b5f85ed268adc3424e2e497e3d9ec8f88bc"; shbts="1671382136\05412608305791\0541702918136:01f74529f76471e79f2870e6c1647b43688027683d1488d4d1a8dc3fea7f9cdf14f634c1"; sessionid=12608305791%3AFmTiK1wAd8CZEH%3A27%3AAYe7qWTQNnomrpzcqANQ3MTaVPF3cg2Bj87tWxUyTA; rur="ODN\05412608305791\0541702918318:01f735ef083f80aaf4cfa26b4c3290a171f44c309b9b1c47315a5fd79e5e64e0fc85dde7"
+            Postman-Token: 51312b17-4f58-46e2-a2e3-4dbdf0086660
             Sec-Fetch-Dest: empty
             Sec-Fetch-Mode: cors
             Sec-Fetch-Site: same-origin
             Sec-Gpc: "1"
-            User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36
-        body: '{"id":1,"name":"Default campaign template","type":"campaign","subject":"","body":"<!doctype html>\n<html>\n    <head>\n        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1\">\n        <base target=\"_blank\">\n\n        <style>\n            body {\n                background-color: #F0F1F3;\n                font-family: ''Helvetica Neue'', ''Segoe UI'', Helvetica, sans-serif;\n                font-size: 15px;\n                line-height: 26px;\n                margin: 0;\n                color: #444;\n            }\n\n            pre {\n                background: #f4f4f4f4;\n                padding: 2px;\n            }\n\n            table {\n                width: 100%;\n                border: 1px solid #ddd;\n            }\n            table td {\n                border-color: #ddd;\n                padding: 5px;\n            }\n\n            .wrap {\n                background-color: #fff;\n                padding: 30px;\n                max-width: 525px;\n                margin: 0 auto;\n                border-radius: 5px;\n            }\n\n            .button {\n                background: #0055d4;\n                border-radius: 3px;\n                text-decoration: none !important;\n                color: #fff !important;\n                font-weight: bold;\n                padding: 10px 30px;\n                display: inline-block;\n            }\n            .button:hover {\n                background: #111;\n            }\n\n            .footer {\n                text-align: center;\n                font-size: 12px;\n                color: #888;\n            }\n                .footer a {\n                    color: #888;\n                    margin-right: 5px;\n                }\n\n            .gutter {\n                padding: 30px;\n            }\n\n            img {\n                max-width: 100%;\n                height: auto;\n            }\n\n            a {\n                color: #0055d4;\n            }\n                a:hover {\n                    color: #111;\n                }\n            @media screen and (max-width: 600px) {\n                .wrap {\n                    max-width: auto;\n                }\n                .gutter {\n                    padding: 10px;\n                }\n            }\n        </style>\n    </head>\n<body style=\"background-color: #F0F1F3;font-family: ''Helvetica Neue'', ''Segoe UI'', Helvetica, sans-serif;font-size: 15px;line-height: 26px;margin: 0;color: #444;\">\n    <div class=\"gutter\" style=\"padding: 30px;\">&nbsp; qwrty</div>\n    <div class=\"wrap\" style=\"background-color: #fff;padding: 30px;max-width: 525px;margin: 0 auto;border-radius: 5px;\">\n        {{ template \"content\" . }}\n    </div>\n    \n    <div class=\"footer\" style=\"text-align: center;font-size: 12px;color: #888;\">\n        <p>\n            {{ L.T \"email.unsubHelp\" }}qwerty\n            <a href=\"{{ UnsubscribeURL }}\" style=\"color: #888;\">{{ L.T \"email.unsub\" }}</a>\n            <a href=\"{{ MessageURL }}\" style=\"color: #888;\">{{ L.T \"email.viewInBrowser\" }}</a>\n        </p>\n        <p>Powered by <a href=\"https://listmonk.app\" target=\"_blank\" style=\"color: #888;\">listmonk</a></p>\n    </div>\n    <div class=\"gutter\" style=\"padding: 30px;\">&nbsp;{{ TrackView }}</div>\n</body>\n</html>\n"}'
+            User-Agent: PostmanRuntime/7.30.0
+            X-Asbd-Id: "198387"
+            X-Csrftoken: KHNn1HMfuB56B2HJvlQg3GX7IKDMR5wg
+            X-Ig-App-Id: "936619743392459"
+            X-Ig-Www-Claim: hmac.AR2VKO-G2ncZYzOuT3PVyMnX3o6DqqN6lX4Z7P1llWZ-NA-I
+            X-Instagram-Ajax: "1006757535"
+            X-Requested-With: XMLHttpRequest
+        body: ""
         body_type: ""
     resp:
         status_code: 200
         header:
-            Content-Type: application/json; charset=UTF-8
-        body: |
-            {"data":{"id":1,"created_at":"2022-10-20T07:36:12.383748Z","updated_at":"2022-12-18T20:04:44.510382Z","name":"Default campaign template","subject":"Default campaign template","type":"campaign","body":"\u003c!doctype html\u003e\n\u003chtml\u003e\n    \u003chead\u003e\n        \u003cmeta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"\u003e\n        \u003cmeta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1\"\u003e\n        \u003cbase target=\"_blank\"\u003e\n\n        \u003cstyle\u003e\n            body {\n                background-color: #F0F1F3;\n                font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;\n                font-size: 15px;\n                line-height: 26px;\n                margin: 0;\n                color: #444;\n            }\n\n            pre {\n                background: #f4f4f4f4;\n                padding: 2px;\n            }\n\n            table {\n                width: 100%;\n                border: 1px solid #ddd;\n            }\n            table td {\n                border-color: #ddd;\n                padding: 5px;\n            }\n\n            .wrap {\n                background-color: #fff;\n                padding: 30px;\n                max-width: 525px;\n                margin: 0 auto;\n                border-radius: 5px;\n            }\n\n            .button {\n                background: #0055d4;\n                border-radius: 3px;\n                text-decoration: none !important;\n                color: #fff !important;\n                font-weight: bold;\n                padding: 10px 30px;\n                display: inline-block;\n            }\n            .button:hover {\n                background: #111;\n            }\n\n            .footer {\n                text-align: center;\n                font-size: 12px;\n                color: #888;\n            }\n                .footer a {\n                    color: #888;\n                    margin-right: 5px;\n                }\n\n            .gutter {\n                padding: 30px;\n            }\n\n            img {\n                max-width: 100%;\n                height: auto;\n            }\n\n            a {\n                color: #0055d4;\n            }\n                a:hover {\n                    color: #111;\n                }\n            @media screen and (max-width: 600px) {\n                .wrap {\n                    max-width: auto;\n                }\n                .gutter {\n                    padding: 10px;\n                }\n            }\n        \u003c/style\u003e\n    \u003c/head\u003e\n\u003cbody style=\"background-color: #F0F1F3;font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;font-size: 15px;line-height: 26px;margin: 0;color: #444;\"\u003e\n    \u003cdiv class=\"gutter\" style=\"padding: 30px;\"\u003e\u0026nbsp; qwrty\u003c/div\u003e\n    \u003cdiv class=\"wrap\" style=\"background-color: #fff;padding: 30px;max-width: 525px;margin: 0 auto;border-radius: 5px;\"\u003e\n        {{ template \"content\" . }}\n    \u003c/div\u003e\n    \n    \u003cdiv class=\"footer\" style=\"text-align: center;font-size: 12px;color: #888;\"\u003e\n        \u003cp\u003e\n            {{ L.T \"email.unsubHelp\" }}qwerty\n            \u003ca href=\"{{ UnsubscribeURL }}\" style=\"color: #888;\"\u003e{{ L.T \"email.unsub\" }}\u003c/a\u003e\n            \u003ca href=\"{{ MessageURL }}\" style=\"color: #888;\"\u003e{{ L.T \"email.viewInBrowser\" }}\u003c/a\u003e\n        \u003c/p\u003e\n        \u003cp\u003ePowered by \u003ca href=\"https://listmonk.app\" target=\"_blank\" style=\"color: #888;\"\u003elistmonk\u003c/a\u003e\u003c/p\u003e\n    \u003c/div\u003e\n    \u003cdiv class=\"gutter\" style=\"padding: 30px;\"\u003e\u0026nbsp;{{ TrackView }}\u003c/div\u003e\n\u003c/body\u003e\n\u003c/html\u003e\n","is_default":true}}
+            Content-Type: text/html; charset=UTF-8
+        body: "\n    \n<!DOCTYPE html>\n<html>\n<head>\n\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\t\n\t<title>No subscriptions - Mailing list</title>\n\t<meta name=\"description\" content=\"\" />\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1\" />\n\n\t\n\t\t<link rel=\"alternate\" type=\"application/rss+xml\" title=\"Mailing list archive - Mailing list\"\n\t\t\thref=\"http://localhost:9000/archive.xml\" />\n\t\n\n\t<link href=\"/public/static/style.css?v2.3.0\" rel=\"stylesheet\" type=\"text/css\" />\n\t<link href=\"/public/custom.css\" rel=\"stylesheet\" type=\"text/css\">\n\t<script src=\"/public/custom.js\" async defer></script>\n\n\t\n\t\t<link rel=\"shortcut icon\" href=\"/public/static/favicon.png\" type=\"image/x-icon\" />\n\t\n</head>\n<body>\n    <div class=\"container wrap\">\n\t\t<header class=\"header\">\n\t\t\t<div class=\"logo\">\n\t\t\t\t<a href=\"http://localhost:9000/subscription/form\">\n\t\t\t\t\n\t\t\t\t\t<img src=\"/public/static/logo.svg\" alt=\"No subscriptions\" />\n\t\t\t\t\n\t\t\t\t</a>\n\t\t\t</div>\n\t\t</header>\n\n\n    <h2>No subscriptions</h2>\n    <div>\n        There are no subscriptions to confirm.\n    </div>\n\n    <p>\n        <a href=\"\" class=\"button\" id=\"btn-back\">Back</a>\n    </p>\n\n    <script>\n        (function() {\n            \n            if(history && history.length >= 3) {\n                var btn = document.getElementById(\"btn-back\");\n                btn.style.display = 'inline-block';\n                btn.onclick = function(e) {\n                    history.go(history.length > 2 ? -2 : -1);\n                    e.preventDefault();\n                };\n            }\n        })();\n    </script>\n    \n\t</div>\n\t\n\t<footer class=\"container\">\n\t\tPowered by <a target=\"_blank\" href=\"https://listmonk.app\">listmonk</a>\n\t</footer>\n</body>\n</html>\n\n"
         body_type: ""
         status_message: ""
         proto_major: 1
@@ -51,6 +53,10 @@ spec:
         - test-127-8
         - test-127-9
         - test-127-10
+        - test-127-11
+        - test-127-12
+        - test-127-13
+        - test-127-14
     assertions:
         noise: []
-    created: 1671393884
+    created: 1671706834

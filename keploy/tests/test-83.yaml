@@ -7,7 +7,7 @@ spec:
         method: GET
         proto_major: 1
         proto_minor: 1
-        url: /api/campaigns/analytics/views?id=9&from=2022-12-11T18%3A30%3A00.863Z&to=2022-12-19T18%3A29%3A00.863Z
+        url: /api/campaigns/running/stats
         header:
             Accept: application/json, text/plain, */*
             Accept-Encoding: gzip, deflate, br
@@ -15,7 +15,7 @@ spec:
             Authorization: Basic bGlzdG1vbms6bGlzdG1vbms=
             Connection: keep-alive
             Cookie: connect.sid=s%3AdxWsE0jhYYsXQwFQKZJhtK_5Jli7MPB1.Wjbj0YQ3J7yJE1Zx21NQAWPtrz1f8i73j9FAnlvbrSg
-            Referer: http://localhost:9000/admin/campaigns/analytics
+            Referer: http://localhost:9000/admin/campaigns
             Sec-Fetch-Dest: empty
             Sec-Fetch-Mode: cors
             Sec-Fetch-Site: same-origin
@@ -28,7 +28,7 @@ spec:
         header:
             Content-Type: application/json; charset=UTF-8
         body: |
-            {"data":[]}
+            {"data":[{"id":12,"status":"running","to_send":0,"sent":0,"started_at":null,"updated_at":"2022-12-18T19:39:38.256064Z","rate":0,"net_rate":0},{"id":13,"status":"running","to_send":0,"sent":0,"started_at":null,"updated_at":"2022-12-18T19:40:05.387203Z","rate":0,"net_rate":0}]}
         body_type: ""
         status_message: ""
         proto_major: 1
@@ -44,4 +44,4 @@ spec:
         - test-83-4
     assertions:
         noise: []
-    created: 1671391894
+    created: 1671392406

@@ -5,7 +5,7 @@ spec:
     metadata:
         name: SQL
         operation: PrepareContext
-        query: '"DELETE FROM media WHERE id=$1 RETURNING filename;"'
+        query: '"SELECT id, status, to_send, sent, started_at, updated_at FROM campaigns WHERE status=$1;"'
         type: SQL_DB
     type: error
     int: 0
@@ -29,7 +29,7 @@ kind: SQL
 name: test-119-2
 spec:
     metadata:
-        arguments: '[{ 1 12}]'
+        arguments: '[{ 1 running}]'
         name: SQL
         operation: QueryContext
         type: SQL_DB
@@ -49,14 +49,36 @@ spec:
     type: table
     table:
         cols:
-            - name: filename
+            - name: id
+              type: int64
+              precision: 0
+              scale: 0
+            - name: status
+              type: '[]uint8'
+              precision: 0
+              scale: 0
+            - name: to_send
+              type: int64
+              precision: 0
+              scale: 0
+            - name: sent
+              type: int64
+              precision: 0
+              scale: 0
+            - name: started_at
               type: <nil>
               precision: 0
               scale: 0
+            - name: updated_at
+              type: time.Time
+              precision: 0
+              scale: 0
         rows:
-            - '[`<nil>` | ]'
+            - '[`13` | `[114 117 110 110 105 110 103]` | `0` | `0` | `<nil>` | `"2022-12-18T20:25:49.473191Z"` | ]'
+            - '[`13` | `[114 117 110 110 105 110 103]` | `0` | `0` | `<nil>` | `"2022-12-18T20:25:49.473191Z"` | ]'
     int: 0
     error:
+        - nil
         - EOF
         - nil
 ---

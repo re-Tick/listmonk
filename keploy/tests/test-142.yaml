@@ -7,16 +7,16 @@ spec:
         method: GET
         proto_major: 1
         proto_minor: 1
-        url: /campaign/00000000-0000-0000-0000-000000000000/00000000-0000-0000-0000-000000000000/px.png
+        url: /public/custom.css
         header:
-            Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+            Accept: text/css,*/*;q=0.1
             Accept-Encoding: gzip, deflate, br
             Accept-Language: en-GB,en
             Authorization: Basic bGlzdG1vbms6bGlzdG1vbms=
             Connection: keep-alive
             Cookie: connect.sid=s%3AdxWsE0jhYYsXQwFQKZJhtK_5Jli7MPB1.Wjbj0YQ3J7yJE1Zx21NQAWPtrz1f8i73j9FAnlvbrSg
-            Referer: http://localhost:9000/api/campaigns/13/preview
-            Sec-Fetch-Dest: image
+            Referer: http://localhost:9000/subscription/e6152472-56ca-4e3e-b086-ea8bfb70c0c3/59558b84-1575-4dc9-b7d8-93b0b7b54849
+            Sec-Fetch-Dest: style
             Sec-Fetch-Mode: no-cors
             Sec-Fetch-Site: same-origin
             Sec-Gpc: "1"
@@ -26,10 +26,8 @@ spec:
     resp:
         status_code: 200
         header:
-            Cache-Control: no-cache
-            Content-Type: image/png
-            X-Robots-Tag: noindex
-        body: "�PNG\r\n\x1A\n\0\0\0\rIHDR\0\0\0\x0E\0\0\0\x03\b\x06\0\0\0��>\x0F\0\0\0\x12IDATx�bb \x13�_# \0\0��\x03W\0\a�F~�\0\0\0\0IEND�B`�"
+            Content-Type: text/css; charset=utf-8
+        body: ""
         body_type: ""
         status_message: ""
         proto_major: 1
@@ -39,4 +37,4 @@ spec:
           data: ""
     assertions:
         noise: []
-    created: 1671395168
+    created: 1671711002

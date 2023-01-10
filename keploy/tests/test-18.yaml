@@ -7,7 +7,7 @@ spec:
         method: GET
         proto_major: 1
         proto_minor: 1
-        url: /api/lists?page=1&query=&order_by=id&order=asc
+        url: /api/subscribers?list_id=&query=subscribers.name%20LIKE%20%27%25Sarthak%25%27%0A&page=1&order_by=id&order=desc
         header:
             Accept: application/json, text/plain, */*
             Accept-Encoding: gzip, deflate, br
@@ -15,7 +15,7 @@ spec:
             Authorization: Basic bGlzdG1vbms6bGlzdG1vbms=
             Connection: keep-alive
             Cookie: connect.sid=s%3AdxWsE0jhYYsXQwFQKZJhtK_5Jli7MPB1.Wjbj0YQ3J7yJE1Zx21NQAWPtrz1f8i73j9FAnlvbrSg
-            Referer: http://localhost:9000/admin/lists
+            Referer: http://localhost:9000/admin/subscribers
             Sec-Fetch-Dest: empty
             Sec-Fetch-Mode: cors
             Sec-Fetch-Site: same-origin
@@ -28,7 +28,7 @@ spec:
         header:
             Content-Type: application/json; charset=UTF-8
         body: |
-            {"data":{"results":[{"id":1,"created_at":"2022-10-20T07:36:12.378176Z","updated_at":"2022-12-16T07:46:00.477233Z","uuid":"0ceef2ef-fb69-41b8-9047-d7ec2dd26aa7","name":"Default list","type":"public","optin":"double","tags":["test","fff"],"description":"","subscriber_count":2,"subscriber_statuses":{"confirmed":1,"unconfirmed":1},"subscription_created_at":null,"subscription_updated_at":null},{"id":5,"created_at":"2022-11-09T06:51:19.581244Z","updated_at":"2022-12-16T10:50:27.647233Z","uuid":"0c6252b0-f1af-4b32-ae47-5f00948d64a0","name":"Ritik","type":"public","optin":"single","tags":[],"description":"","subscriber_count":1,"subscriber_statuses":{"confirmed":1},"subscription_created_at":null,"subscription_updated_at":null},{"id":7,"created_at":"2022-11-24T06:39:48.247188Z","updated_at":"2022-12-06T11:10:55.866024Z","uuid":"192470fa-1865-4249-ae26-81644dbb2a29","name":"tests","type":"private","optin":"single","tags":["testall"],"description":"","subscriber_count":1,"subscriber_statuses":{"unconfirmed":1},"subscription_created_at":null,"subscription_updated_at":null},{"id":10,"created_at":"2022-12-06T11:17:23.574221Z","updated_at":"2022-12-06T11:17:23.574221Z","uuid":"21915090-6dce-40ed-b682-0ce419f0125a","name":"Sarthak","type":"public","optin":"double","tags":[],"description":"","subscriber_count":0,"subscriber_statuses":{},"subscription_created_at":null,"subscription_updated_at":null},{"id":11,"created_at":"2022-12-16T08:10:37.863884Z","updated_at":"2022-12-16T08:10:37.863884Z","uuid":"f79a73f7-1687-4951-adbf-3cfa79e7b9ad","name":"qwerty","type":"public","optin":"double","tags":["wasd"],"description":"","subscriber_count":0,"subscriber_statuses":{},"subscription_created_at":null,"subscription_updated_at":null}],"query":"","total":5,"per_page":20,"page":1}}
+            {"data":{"results":[{"id":22,"created_at":"2022-12-16T08:11:38.778558Z","updated_at":"2022-12-16T08:11:38.778558Z","uuid":"57cae344-b3ae-468f-824e-db75af885759","email":"sarthak@keploy.io","name":"Sarthak","attribs":{},"status":"enabled","lists":[{"subscription_status":"confirmed","id":1,"uuid":"0ceef2ef-fb69-41b8-9047-d7ec2dd26aa7","name":"Default list","type":"public","optin":"double","tags":["test","fff"],"created_at":"2022-10-20T07:36:12.378176+00:00","updated_at":"2022-12-16T07:46:00.477233+00:00"},{"subscription_status":"confirmed","id":5,"uuid":"0c6252b0-f1af-4b32-ae47-5f00948d64a0","name":"Ritik","type":"public","optin":"single","tags":null,"created_at":"2022-11-09T06:51:19.581244+00:00","updated_at":"2022-12-16T10:50:27.647233+00:00"}]}],"query":"subscribers.name LIKE '%Sarthak%'","total":1,"per_page":20,"page":1}}
         body_type: ""
         status_message: ""
         proto_major: 1
@@ -39,6 +39,15 @@ spec:
     mocks:
         - test-18-0
         - test-18-1
+        - test-18-2
+        - test-18-3
+        - test-18-4
+        - test-18-5
+        - test-18-6
+        - test-18-7
+        - test-18-8
+        - test-18-9
+        - test-18-10
     assertions:
         noise: []
-    created: 1671362772
+    created: 1671363416

@@ -7,21 +7,22 @@ spec:
         method: GET
         proto_major: 1
         proto_minor: 1
-        url: /api/campaigns/analytics/views?id=12&from=2022-12-11T18%3A30%3A00.752Z&to=2022-12-19T18%3A29%3A00.752Z
+        url: /api/media
         header:
-            Accept: application/json, text/plain, */*
+            Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
             Accept-Encoding: gzip, deflate, br
-            Accept-Language: en-GB,en
             Authorization: Basic bGlzdG1vbms6bGlzdG1vbms=
             Connection: keep-alive
+            Content-Length: "76"
+            Content-Type: application/json
             Cookie: connect.sid=s%3AdxWsE0jhYYsXQwFQKZJhtK_5Jli7MPB1.Wjbj0YQ3J7yJE1Zx21NQAWPtrz1f8i73j9FAnlvbrSg
-            Referer: http://localhost:9000/admin/campaigns/analytics?id=12
-            Sec-Fetch-Dest: empty
-            Sec-Fetch-Mode: cors
+            Postman-Token: bd51e9aa-69e4-494a-9892-bcb24a7d48ae
+            Sec-Fetch-Dest: iframe
+            Sec-Fetch-Mode: navigate
             Sec-Fetch-Site: same-origin
-            Sec-Gpc: "1"
-            User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36
-        body: ""
+            Sec-Gpc: '"1"'
+            Upgrade-Insecure-Requests: '"1"'
+        body: '{"action":"unsubscribe","list_ids":null,"target_list_ids":[5],"ids":[23,22]}'
         body_type: ""
     resp:
         status_code: 200
@@ -44,4 +45,4 @@ spec:
         - test-95-4
     assertions:
         noise: []
-    created: 1671392382
+    created: 1671392715

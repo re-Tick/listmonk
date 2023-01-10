@@ -3,10 +3,9 @@ kind: SQL
 name: test-24-0
 spec:
     metadata:
-        arguments: '[{ 1 2} { 2 0} { 3 0} { 4 } { 5 0} { 6 1}]'
         name: SQL
-        operation: QueryContext
-        query: '"SELECT COUNT(*) OVER () AS total, bounces.id, bounces.type, bounces.source, bounces.meta, bounces.created_at, bounces.subscriber_id, subscribers.uuid AS subscriber_uuid, subscribers.email AS email, subscribers.email AS email, ( CASE WHEN bounces.campaign_id IS NOT NULL THEN JSON_BUILD_OBJECT(''id'', bounces.campaign_id, ''name'', campaigns.name) ELSE NULL END ) AS campaign FROM bounces LEFT JOIN subscribers ON (subscribers.id = bounces.subscriber_id) LEFT JOIN campaigns ON (campaigns.id = bounces.campaign_id) WHERE ($1 = 0 OR bounces.id = $1) AND ($2 = 0 OR bounces.campaign_id = $2) AND ($3 = 0 OR bounces.subscriber_id = $3) AND ($4 = '''' OR bounces.source = $4) ORDER BY id asc OFFSET $5 LIMIT $6;"'
+        operation: PrepareContext
+        query: '"SELECT * FROM subscribers WHERE CASE WHEN $1 > 0 THEN id = $1 WHEN $2 != '''' THEN uuid = $2::UUID WHEN $3 != '''' THEN email = $3 END;"'
         type: SQL_DB
     type: error
     int: 0
@@ -19,28 +18,58 @@ name: test-24-1
 spec:
     metadata:
         name: SQL
+        operation: PrepareContext.NumInput
+        type: SQL_DB
+    type: int
+    int: 3
+    error: []
+---
+version: api.keploy.io/v1beta1
+kind: SQL
+name: test-24-2
+spec:
+    metadata:
+        arguments: '[{ 1 1} { 2 <nil>} { 3 }]'
+        name: SQL
+        operation: QueryContext
+        type: SQL_DB
+    type: error
+    int: 0
+    error:
+        - nil
+---
+version: api.keploy.io/v1beta1
+kind: SQL
+name: test-24-3
+spec:
+    metadata:
+        name: SQL
         operation: QueryContext.Close
         type: SQL_DB
     type: table
     table:
         cols:
-            - name: total
-              type: <nil>
-              precision: 0
-              scale: 0
             - name: id
               type: <nil>
               precision: 0
               scale: 0
-            - name: type
+            - name: uuid
               type: <nil>
               precision: 0
               scale: 0
-            - name: source
+            - name: email
               type: <nil>
               precision: 0
               scale: 0
-            - name: meta
+            - name: name
+              type: <nil>
+              precision: 0
+              scale: 0
+            - name: attribs
+              type: <nil>
+              precision: 0
+              scale: 0
+            - name: status
               type: <nil>
               precision: 0
               scale: 0
@@ -48,29 +77,26 @@ spec:
               type: <nil>
               precision: 0
               scale: 0
-            - name: subscriber_id
-              type: <nil>
-              precision: 0
-              scale: 0
-            - name: subscriber_uuid
-              type: <nil>
-              precision: 0
-              scale: 0
-            - name: email
-              type: <nil>
-              precision: 0
-              scale: 0
-            - name: email
-              type: <nil>
-              precision: 0
-              scale: 0
-            - name: campaign
+            - name: updated_at
               type: <nil>
               precision: 0
               scale: 0
         rows:
-            - '[`<nil>` | `<nil>` | `<nil>` | `<nil>` | `<nil>` | `<nil>` | `<nil>` | `<nil>` | `<nil>` | `<nil>` | `<nil>` | ]'
+            - '[`<nil>` | `<nil>` | `<nil>` | `<nil>` | `<nil>` | `<nil>` | `<nil>` | `<nil>` | ]'
     int: 0
     error:
         - EOF
+        - nil
+---
+version: api.keploy.io/v1beta1
+kind: SQL
+name: test-24-4
+spec:
+    metadata:
+        name: SQL
+        operation: PrepareContext.Close
+        type: SQL_DB
+    type: error
+    int: 0
+    error:
         - nil

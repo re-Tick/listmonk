@@ -3,10 +3,9 @@ kind: SQL
 name: test-66-0
 spec:
     metadata:
-        arguments: '[{ 1 0} { 2 } { 3 } { 4 0} { 5 20}]'
         name: SQL
-        operation: QueryContext
-        query: "\"WITH ls AS ( \tSELECT COUNT(*) OVER () AS total, lists.* FROM lists WHERE CASE WHEN $1 > 0 THEN id = $1 WHEN $2 != '' THEN uuid = $2::UUID WHEN $3 != '' THEN name ILIKE $3 ELSE true END OFFSET $4 LIMIT (CASE WHEN $5 = 0 THEN NULL ELSE $5 END) ), counts AS ( SELECT list_id, JSON_OBJECT_AGG(status, subscriber_count) AS subscriber_statuses FROM ( SELECT COUNT(*) as subscriber_count, list_id, status FROM subscriber_lists WHERE ($1 = 0 OR list_id = $1) GROUP BY list_id, status ) row GROUP BY list_id ) SELECT ls.*, subscriber_statuses FROM ls LEFT JOIN counts ON (counts.list_id = ls.id) ORDER BY created_at desc;\""
+        operation: PrepareContext
+        query: '"SELECT id, name, type, subject, (CASE WHEN $2 = false THEN body ELSE '''' END) as body, is_default, created_at, updated_at FROM templates WHERE ($1 = 0 OR id = $1) AND ($3 = '''' OR type = $3::template_type) ORDER BY created_at;"'
         type: SQL_DB
     type: error
     int: 0
@@ -19,21 +18,39 @@ name: test-66-1
 spec:
     metadata:
         name: SQL
+        operation: PrepareContext.NumInput
+        type: SQL_DB
+    type: int
+    int: 3
+    error: []
+---
+version: api.keploy.io/v1beta1
+kind: SQL
+name: test-66-2
+spec:
+    metadata:
+        arguments: '[{ 1 0} { 2 false} { 3 }]'
+        name: SQL
+        operation: QueryContext
+        type: SQL_DB
+    type: error
+    int: 0
+    error:
+        - nil
+---
+version: api.keploy.io/v1beta1
+kind: SQL
+name: test-66-3
+spec:
+    metadata:
+        name: SQL
         operation: QueryContext.Close
         type: SQL_DB
     type: table
     table:
         cols:
-            - name: total
-              type: int64
-              precision: 0
-              scale: 0
             - name: id
               type: int64
-              precision: 0
-              scale: 0
-            - name: uuid
-              type: '[]uint8'
               precision: 0
               scale: 0
             - name: name
@@ -44,12 +61,16 @@ spec:
               type: '[]uint8'
               precision: 0
               scale: 0
-            - name: optin
-              type: '[]uint8'
+            - name: subject
+              type: string
               precision: 0
               scale: 0
-            - name: tags
-              type: '[]uint8'
+            - name: body
+              type: string
+              precision: 0
+              scale: 0
+            - name: is_default
+              type: bool
               precision: 0
               scale: 0
             - name: created_at
@@ -60,21 +81,26 @@ spec:
               type: time.Time
               precision: 0
               scale: 0
-            - name: subscriber_statuses
-              type: <nil>
-              precision: 0
-              scale: 0
         rows:
-            - '[`4` | `11` | `[102 55 57 97 55 51 102 55 45 49 54 56 55 45 52 57 53 49 45 97 100 98 102 45 51 99 102 97 55 57 101 55 98 57 97 100]` | `qwerty` | `[112 117 98 108 105 99]` | `[115 105 110 103 108 101]` | `[123 119 97 115 100 125]` | `"2022-12-16T08:10:37.863884Z"` | `"2022-12-18T11:26:24.970648Z"` | `<nil>` | ]'
-            - '[`4` | `10` | `[50 49 57 49 53 48 57 48 45 54 100 99 101 45 52 48 101 100 45 98 54 56 50 45 48 99 101 52 49 57 102 48 49 50 53 97]` | `Sarthak` | `[112 117 98 108 105 99]` | `[100 111 117 98 108 101]` | `<nil>` | `"2022-12-06T11:17:23.574221Z"` | `"2022-12-06T11:17:23.574221Z"` | `<nil>` | ]'
-            - '[`4` | `5` | `[48 99 54 50 53 50 98 48 45 102 49 97 102 45 52 98 51 50 45 97 101 52 55 45 53 102 48 48 57 52 56 100 54 52 97 48]` | `Ritik` | `[112 117 98 108 105 99]` | `[115 105 110 103 108 101]` | `<nil>` | `"2022-11-09T06:51:19.581244Z"` | `"2022-12-16T10:50:27.647233Z"` | `<nil>` | ]'
-            - '[`4` | `1` | `[48 99 101 101 102 50 101 102 45 102 98 54 57 45 52 49 98 56 45 57 48 52 55 45 100 55 101 99 50 100 100 50 54 97 97 55]` | `Default list` | `[112 117 98 108 105 99]` | `[100 111 117 98 108 101]` | `[123 116 101 115 116 44 102 102 102 125]` | `"2022-10-20T07:36:12.378176Z"` | `"2022-12-16T07:46:00.477233Z"` | `<nil>` | ]'
-            - '[`4` | `1` | `[48 99 101 101 102 50 101 102 45 102 98 54 57 45 52 49 98 56 45 57 48 52 55 45 100 55 101 99 50 100 100 50 54 97 97 55]` | `Default list` | `[112 117 98 108 105 99]` | `[100 111 117 98 108 101]` | `[123 116 101 115 116 44 102 102 102 125]` | `"2022-10-20T07:36:12.378176Z"` | `"2022-12-16T07:46:00.477233Z"` | `<nil>` | ]'
+            - "[`1` | `Default campaign template` | `[99 97 109 112 97 105 103 110]` | `` | `<!doctype html>\n<html>\n    <head>\n        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1\">\n        <base target=\"_blank\">\n\n        <style>\n            body {\n                background-color: #F0F1F3;\n                font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;\n                font-size: 15px;\n                line-height: 26px;\n                margin: 0;\n                color: #444;\n            }\n\n            pre {\n                background: #f4f4f4f4;\n                padding: 2px;\n            }\n\n            table {\n                width: 100%;\n                border: 1px solid #ddd;\n            }\n            table td {\n                border-color: #ddd;\n                padding: 5px;\n            }\n\n            .wrap {\n                background-color: #fff;\n                padding: 30px;\n                max-width: 525px;\n                margin: 0 auto;\n                border-radius: 5px;\n            }\n\n            .button {\n                background: #0055d4;\n                border-radius: 3px;\n                text-decoration: none !important;\n                color: #fff !important;\n                font-weight: bold;\n                padding: 10px 30px;\n                display: inline-block;\n            }\n            .button:hover {\n                background: #111;\n            }\n\n            .footer {\n                text-align: center;\n                font-size: 12px;\n                color: #888;\n            }\n                .footer a {\n                    color: #888;\n                    margin-right: 5px;\n                }\n\n            .gutter {\n                padding: 30px;\n            }\n\n            img {\n                max-width: 100%;\n                height: auto;\n            }\n\n            a {\n                color: #0055d4;\n            }\n                a:hover {\n                    color: #111;\n                }\n            @media screen and (max-width: 600px) {\n                .wrap {\n                    max-width: auto;\n                }\n                .gutter {\n                    padding: 10px;\n                }\n            }\n        </style>\n    </head>\n<body style=\"background-color: #F0F1F3;font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;font-size: 15px;line-height: 26px;margin: 0;color: #444;\">\n    <div class=\"gutter\" style=\"padding: 30px;\">&nbsp;</div>\n    <div class=\"wrap\" style=\"background-color: #fff;padding: 30px;max-width: 525px;margin: 0 auto;border-radius: 5px;\">\n        {{ template \"content\" . }}\n    </div>\n    \n    <div class=\"footer\" style=\"text-align: center;font-size: 12px;color: #888;\">\n        <p>\n            {{ L.T \"email.unsubHelp\" }}\n            <a href=\"{{ UnsubscribeURL }}\" style=\"color: #888;\">{{ L.T \"email.unsub\" }}</a>\n            <a href=\"{{ MessageURL }}\" style=\"color: #888;\">{{ L.T \"email.viewInBrowser\" }}</a>\n        </p>\n        <p>Powered by <a href=\"https://listmonk.app\" target=\"_blank\" style=\"color: #888;\">listmonk</a></p>\n    </div>\n    <div class=\"gutter\" style=\"padding: 30px;\">&nbsp;{{ TrackView }}</div>\n</body>\n</html>\n` | `true` | `\"2022-10-20T07:36:12.383748Z\"` | `\"2022-10-20T07:36:12.383748Z\"` | ]"
+            - "[`2` | `Sample transactional template` | `[116 120]` | `Welcome {{ .Subscriber.Name }}` | `<!doctype html>\n<html>\n    <head>\n        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1\">\n        <base target=\"_blank\">\n\n        <style>\n            body {\n                background-color: #F0F1F3;\n                font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;\n                font-size: 15px;\n                line-height: 26px;\n                margin: 0;\n                color: #444;\n            }\n\n            pre {\n                background: #f4f4f4f4;\n                padding: 2px;\n            }\n\n            table {\n                width: 100%;\n                border: 1px solid #ddd;\n            }\n            table td {\n                border-color: #ddd;\n                padding: 5px;\n            }\n\n            .wrap {\n                background-color: #fff;\n                padding: 30px;\n                max-width: 525px;\n                margin: 0 auto;\n                border-radius: 5px;\n            }\n\n            .button {\n                background: #0055d4;\n                border-radius: 3px;\n                text-decoration: none !important;\n                color: #fff !important;\n                font-weight: bold;\n                padding: 10px 30px;\n                display: inline-block;\n            }\n            .button:hover {\n                background: #111;\n            }\n\n            .footer {\n                text-align: center;\n                font-size: 12px;\n                color: #888;\n            }\n                .footer a {\n                    color: #888;\n                    margin-right: 5px;\n                }\n\n            .gutter {\n                padding: 30px;\n            }\n\n            img {\n                max-width: 100%;\n                height: auto;\n            }\n\n            a {\n                color: #0055d4;\n            }\n                a:hover {\n                    color: #111;\n                }\n            @media screen and (max-width: 600px) {\n                .wrap {\n                    max-width: auto;\n                }\n                .gutter {\n                    padding: 10px;\n                }\n            }\n        </style>\n    </head>\n<body style=\"background-color: #F0F1F3;font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;font-size: 15px;line-height: 26px;margin: 0;color: #444;\">\n    <div class=\"gutter\" style=\"padding: 30px;\">&nbsp;</div>\n    <div class=\"wrap\" style=\"background-color: #fff;padding: 30px;max-width: 525px;margin: 0 auto;border-radius: 5px;\">\n        <p>Hello {{ .Subscriber.Name }}</p>\n        <p>\n            <strong>Order number: </strong> {{ .Tx.Data.order_id }}<br />\n            <strong>Shipping date: </strong> {{ .Tx.Data.shipping_date }}<br />\n        </p>\n        <br />\n        <p>\n            Transactional templates supports arbitrary parameters.\n            Render them using <code>.Tx.Data.YourParamName</code>. For more information,\n            see the transactional mailing <a href=\"https://listmonk.app/docs/transactional\">documentation</a>.\n        </p>\n    </div>\n    \n    <div class=\"footer\" style=\"text-align: center;font-size: 12px;color: #888;\">\n        <p>Powered by <a href=\"https://listmonk.app\" target=\"_blank\" style=\"color: #888;\">listmonk</a></p>\n    </div>\n</body>\n</html>\n` | `false` | `\"2022-10-20T07:36:12.389662Z\"` | `\"2022-10-20T07:36:12.389662Z\"` | ]"
+            - "[`2` | `Sample transactional template` | `[116 120]` | `Welcome {{ .Subscriber.Name }}` | `<!doctype html>\n<html>\n    <head>\n        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1\">\n        <base target=\"_blank\">\n\n        <style>\n            body {\n                background-color: #F0F1F3;\n                font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;\n                font-size: 15px;\n                line-height: 26px;\n                margin: 0;\n                color: #444;\n            }\n\n            pre {\n                background: #f4f4f4f4;\n                padding: 2px;\n            }\n\n            table {\n                width: 100%;\n                border: 1px solid #ddd;\n            }\n            table td {\n                border-color: #ddd;\n                padding: 5px;\n            }\n\n            .wrap {\n                background-color: #fff;\n                padding: 30px;\n                max-width: 525px;\n                margin: 0 auto;\n                border-radius: 5px;\n            }\n\n            .button {\n                background: #0055d4;\n                border-radius: 3px;\n                text-decoration: none !important;\n                color: #fff !important;\n                font-weight: bold;\n                padding: 10px 30px;\n                display: inline-block;\n            }\n            .button:hover {\n                background: #111;\n            }\n\n            .footer {\n                text-align: center;\n                font-size: 12px;\n                color: #888;\n            }\n                .footer a {\n                    color: #888;\n                    margin-right: 5px;\n                }\n\n            .gutter {\n                padding: 30px;\n            }\n\n            img {\n                max-width: 100%;\n                height: auto;\n            }\n\n            a {\n                color: #0055d4;\n            }\n                a:hover {\n                    color: #111;\n                }\n            @media screen and (max-width: 600px) {\n                .wrap {\n                    max-width: auto;\n                }\n                .gutter {\n                    padding: 10px;\n                }\n            }\n        </style>\n    </head>\n<body style=\"background-color: #F0F1F3;font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;font-size: 15px;line-height: 26px;margin: 0;color: #444;\">\n    <div class=\"gutter\" style=\"padding: 30px;\">&nbsp;</div>\n    <div class=\"wrap\" style=\"background-color: #fff;padding: 30px;max-width: 525px;margin: 0 auto;border-radius: 5px;\">\n        <p>Hello {{ .Subscriber.Name }}</p>\n        <p>\n            <strong>Order number: </strong> {{ .Tx.Data.order_id }}<br />\n            <strong>Shipping date: </strong> {{ .Tx.Data.shipping_date }}<br />\n        </p>\n        <br />\n        <p>\n            Transactional templates supports arbitrary parameters.\n            Render them using <code>.Tx.Data.YourParamName</code>. For more information,\n            see the transactional mailing <a href=\"https://listmonk.app/docs/transactional\">documentation</a>.\n        </p>\n    </div>\n    \n    <div class=\"footer\" style=\"text-align: center;font-size: 12px;color: #888;\">\n        <p>Powered by <a href=\"https://listmonk.app\" target=\"_blank\" style=\"color: #888;\">listmonk</a></p>\n    </div>\n</body>\n</html>\n` | `false` | `\"2022-10-20T07:36:12.389662Z\"` | `\"2022-10-20T07:36:12.389662Z\"` | ]"
     int: 0
     error:
         - nil
         - nil
-        - nil
-        - nil
         - EOF
+        - nil
+---
+version: api.keploy.io/v1beta1
+kind: SQL
+name: test-66-4
+spec:
+    metadata:
+        name: SQL
+        operation: PrepareContext.Close
+        type: SQL_DB
+    type: error
+    int: 0
+    error:
         - nil

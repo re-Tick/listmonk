@@ -4,36 +4,32 @@ name: test-166
 spec:
     metadata: {}
     req:
-        method: POST
+        method: GET
         proto_major: 1
         proto_minor: 1
-        url: /subscription/e6152472-56ca-4e3e-b086-ea8bfb70c0c3/59558b84-1575-4dc9-b7d8-93b0b7b54849
+        url: /api/bounces
         header:
             Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
             Accept-Encoding: gzip, deflate, br
-            Accept-Language: en-GB,en
             Authorization: Basic bGlzdG1vbms6bGlzdG1vbms=
-            Cache-Control: max-age=0
             Connection: keep-alive
-            Content-Length: "0"
-            Content-Type: application/x-www-form-urlencoded
+            Content-Length: "77"
+            Content-Type: application/json
             Cookie: connect.sid=s%3AdxWsE0jhYYsXQwFQKZJhtK_5Jli7MPB1.Wjbj0YQ3J7yJE1Zx21NQAWPtrz1f8i73j9FAnlvbrSg
-            Origin: http://localhost:9000
-            Referer: http://localhost:9000/subscription/e6152472-56ca-4e3e-b086-ea8bfb70c0c3/59558b84-1575-4dc9-b7d8-93b0b7b54849
-            Sec-Fetch-Dest: document
+            Postman-Token: b2918d0c-5483-43b1-baa6-ac8e670dd02b
+            Sec-Fetch-Dest: iframe
             Sec-Fetch-Mode: navigate
             Sec-Fetch-Site: same-origin
-            Sec-Fetch-User: ?1
-            Sec-Gpc: "1"
-            Upgrade-Insecure-Requests: "1"
-            User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36
-        body: ""
+            Sec-Gpc: '"1"'
+            Upgrade-Insecure-Requests: '"1"'
+        body: "{\n    \"source\": \"api\", \n    \"type\": \"hard\",\n    \"email\": \"john@example.com\"\n}"
         body_type: ""
     resp:
         status_code: 200
         header:
-            Content-Type: text/html; charset=UTF-8
-        body: "\n    \n<!DOCTYPE html>\n<html>\n<head>\n\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\t\n\t<title>Unsubscribed - Mailing list</title>\n\t<meta name=\"description\" content=\"\" />\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1\" />\n\n\t\n\t\t<link rel=\"alternate\" type=\"application/rss+xml\" title=\"Mailing list archive - Mailing list\"\n\t\t\thref=\"http://localhost:9000/archive.xml\" />\n\t\n\n\t<link href=\"/public/static/style.css?v2.3.0\" rel=\"stylesheet\" type=\"text/css\" />\n\t<link href=\"/public/custom.css\" rel=\"stylesheet\" type=\"text/css\">\n\t<script src=\"/public/custom.js\" async defer></script>\n\n\t\n\t\t<link rel=\"shortcut icon\" href=\"/public/static/favicon.png\" type=\"image/x-icon\" />\n\t\n</head>\n<body>\n    <div class=\"container wrap\">\n\t\t<header class=\"header\">\n\t\t\t<div class=\"logo\">\n\t\t\t\t<a href=\"http://localhost:9000/subscription/form\">\n\t\t\t\t\n\t\t\t\t\t<img src=\"/public/static/logo.svg\" alt=\"Unsubscribed\" />\n\t\t\t\t\n\t\t\t\t</a>\n\t\t\t</div>\n\t\t</header>\n\n\n    <h2>Unsubscribed</h2>\n    <div>\n        You have unsubscribed successfully.\n    </div>\n\n    <p>\n        <a href=\"\" class=\"button\" id=\"btn-back\">Back</a>\n    </p>\n\n    <script>\n        (function() {\n            \n            if(history && history.length >= 3) {\n                var btn = document.getElementById(\"btn-back\");\n                btn.style.display = 'inline-block';\n                btn.onclick = function(e) {\n                    history.go(history.length > 2 ? -2 : -1);\n                    e.preventDefault();\n                };\n            }\n        })();\n    </script>\n    \n\t</div>\n\t\n\t<footer class=\"container\">\n\t\tPowered by <a target=\"_blank\" href=\"https://listmonk.app\">listmonk</a>\n\t</footer>\n</body>\n</html>\n\n"
+            Content-Type: application/json; charset=UTF-8
+        body: |
+            {"data":{"results":[{"id":2,"type":"hard","source":"api","meta":{},"created_at":"2022-12-27T11:57:08.395573Z","email":"john@example.com","subscriber_uuid":"10d06e26-41f6-4115-9135-cafb0bf9ad7e","subscriber_id":1,"campaign":null},{"id":1,"type":"hard","source":"api","meta":{},"created_at":"2022-12-27T11:57:06.390803Z","email":"john@example.com","subscriber_uuid":"10d06e26-41f6-4115-9135-cafb0bf9ad7e","subscriber_id":1,"campaign":null}],"query":"","total":2,"per_page":20,"page":1}}
         body_type: ""
         status_message: ""
         proto_major: 1
@@ -44,20 +40,6 @@ spec:
     mocks:
         - test-166-0
         - test-166-1
-        - test-166-2
-        - test-166-3
-        - test-166-4
-        - test-166-5
-        - test-166-6
-        - test-166-7
-        - test-166-8
-        - test-166-9
-        - test-166-10
-        - test-166-11
-        - test-166-12
-        - test-166-13
-        - test-166-14
-        - test-166-15
     assertions:
         noise: []
-    created: 1671711004
+    created: 1672142924

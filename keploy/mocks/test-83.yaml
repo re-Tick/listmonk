@@ -5,7 +5,7 @@ spec:
     metadata:
         name: SQL
         operation: PrepareContext
-        query: '"WITH intval AS ( SELECT CASE WHEN (EXTRACT (EPOCH FROM ($3::TIMESTAMP - $2::TIMESTAMP)) / 86400) >= 7 THEN ''day'' ELSE ''hour'' END ) SELECT campaign_id, COUNT(*) AS "count", DATE_TRUNC((SELECT * FROM intval), created_at) AS "timestamp" FROM campaign_views WHERE campaign_id=ANY($1) AND created_at >= $2 AND created_at <= $3 GROUP BY campaign_id, "timestamp" ORDER BY "timestamp" ASC;"'
+        query: '"SELECT id, status, to_send, sent, started_at, updated_at FROM campaigns WHERE status=$1;"'
         type: SQL_DB
     type: error
     int: 0
@@ -21,7 +21,7 @@ spec:
         operation: PrepareContext.NumInput
         type: SQL_DB
     type: int
-    int: 3
+    int: 1
     error: []
 ---
 version: api.keploy.io/v1beta1
@@ -29,7 +29,7 @@ kind: SQL
 name: test-83-2
 spec:
     metadata:
-        arguments: '[{ 1 {9}} { 2 2022-12-11T18:30:00.863Z} { 3 2022-12-19T18:29:00.863Z}]'
+        arguments: '[{ 1 running}]'
         name: SQL
         operation: QueryContext
         type: SQL_DB
@@ -49,22 +49,38 @@ spec:
     type: table
     table:
         cols:
-            - name: campaign_id
+            - name: id
+              type: int64
+              precision: 0
+              scale: 0
+            - name: status
+              type: '[]uint8'
+              precision: 0
+              scale: 0
+            - name: to_send
+              type: int64
+              precision: 0
+              scale: 0
+            - name: sent
+              type: int64
+              precision: 0
+              scale: 0
+            - name: started_at
               type: <nil>
               precision: 0
               scale: 0
-            - name: count
-              type: <nil>
-              precision: 0
-              scale: 0
-            - name: timestamp
-              type: <nil>
+            - name: updated_at
+              type: time.Time
               precision: 0
               scale: 0
         rows:
-            - '[`<nil>` | `<nil>` | `<nil>` | ]'
+            - '[`12` | `[114 117 110 110 105 110 103]` | `0` | `0` | `<nil>` | `"2022-12-18T19:39:38.256064Z"` | ]'
+            - '[`13` | `[114 117 110 110 105 110 103]` | `0` | `0` | `<nil>` | `"2022-12-18T19:40:05.387203Z"` | ]'
+            - '[`13` | `[114 117 110 110 105 110 103]` | `0` | `0` | `<nil>` | `"2022-12-18T19:40:05.387203Z"` | ]'
     int: 0
     error:
+        - nil
+        - nil
         - EOF
         - nil
 ---

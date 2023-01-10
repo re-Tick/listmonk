@@ -1,25 +1,11 @@
 version: api.keploy.io/v1beta1
-kind: Generic
+kind: SQL
 name: test-60-0
 spec:
     metadata:
         name: SQL
-        operation: BeginTx
-        options: '{0 true}'
-        type: SQL_DB
-    objects:
-        - type: '*keploy.KError'
-          data: H4sIAAAAAAAA/+L638jKyPS/hYGBgfV/EwMjIyAAAP//ngbw8hEAAAA=
----
-version: api.keploy.io/v1beta1
-kind: SQL
-name: test-60-1
-spec:
-    metadata:
-        arguments: '[{ 1 {}}]'
-        name: SQL
-        operation: QueryContext
-        query: '"SELECT COUNT(*) AS total FROM subscribers LEFT JOIN subscriber_lists ON ( (CASE WHEN CARDINALITY($1::INT[]) > 0 THEN true ELSE false END) AND subscriber_lists.subscriber_id = subscribers.id ) WHERE (CARDINALITY($1) = 0 OR subscriber_lists.list_id = ANY($1::INT[])) ;"'
+        operation: PrepareContext
+        query: '"SELECT COUNT(*) AS "count", url FROM link_clicks LEFT JOIN links ON (link_clicks.link_id = links.id) WHERE campaign_id=ANY($1) AND link_clicks.created_at >= $2 AND link_clicks.created_at <= $3 GROUP BY links.url ORDER BY "count" DESC LIMIT 50;"'
         type: SQL_DB
     type: error
     int: 0
@@ -28,7 +14,33 @@ spec:
 ---
 version: api.keploy.io/v1beta1
 kind: SQL
+name: test-60-1
+spec:
+    metadata:
+        name: SQL
+        operation: PrepareContext.NumInput
+        type: SQL_DB
+    type: int
+    int: 3
+    error: []
+---
+version: api.keploy.io/v1beta1
+kind: SQL
 name: test-60-2
+spec:
+    metadata:
+        arguments: '[{ 1 {9}} { 2 2022-12-11T18:30:00.863Z} { 3 2022-12-19T18:29:00.863Z}]'
+        name: SQL
+        operation: QueryContext
+        type: SQL_DB
+    type: error
+    int: 0
+    error:
+        - nil
+---
+version: api.keploy.io/v1beta1
+kind: SQL
+name: test-60-3
 spec:
     metadata:
         name: SQL
@@ -37,25 +49,30 @@ spec:
     type: table
     table:
         cols:
-            - name: total
-              type: int64
+            - name: count
+              type: <nil>
+              precision: 0
+              scale: 0
+            - name: url
+              type: <nil>
               precision: 0
               scale: 0
         rows:
-            - '[`0` | ]'
+            - '[`<nil>` | `<nil>` | ]'
     int: 0
     error:
-        - nil
+        - EOF
         - nil
 ---
 version: api.keploy.io/v1beta1
-kind: Generic
-name: test-60-3
+kind: SQL
+name: test-60-4
 spec:
     metadata:
         name: SQL
-        operation: BeginTx.Rollback
+        operation: PrepareContext.Close
         type: SQL_DB
-    objects:
-        - type: '*keploy.KError'
-          data: H4sIAAAAAAAA/+L638jKyPS/hYGBgfV/EwMjIyAAAP//ngbw8hEAAAA=
+    type: error
+    int: 0
+    error:
+        - nil

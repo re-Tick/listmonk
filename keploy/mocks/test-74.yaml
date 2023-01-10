@@ -5,7 +5,7 @@ spec:
     metadata:
         name: SQL
         operation: PrepareContext
-        query: '"SELECT id, status, to_send, sent, started_at, updated_at FROM campaigns WHERE status=$1;"'
+        query: '"WITH intval AS ( SELECT CASE WHEN (EXTRACT (EPOCH FROM ($3::TIMESTAMP - $2::TIMESTAMP)) / 86400) >= 7 THEN ''day'' ELSE ''hour'' END ) SELECT campaign_id, COUNT(*) AS "count", DATE_TRUNC((SELECT * FROM intval), created_at) AS "timestamp" FROM campaign_views WHERE campaign_id=ANY($1) AND created_at >= $2 AND created_at <= $3 GROUP BY campaign_id, "timestamp" ORDER BY "timestamp" ASC;"'
         type: SQL_DB
     type: error
     int: 0
@@ -21,7 +21,7 @@ spec:
         operation: PrepareContext.NumInput
         type: SQL_DB
     type: int
-    int: 1
+    int: 3
     error: []
 ---
 version: api.keploy.io/v1beta1
@@ -29,7 +29,7 @@ kind: SQL
 name: test-74-2
 spec:
     metadata:
-        arguments: '[{ 1 running}]'
+        arguments: '[{ 1 {12}} { 2 2022-12-11T18:30:00.752Z} { 3 2022-12-19T18:29:00.752Z}]'
         name: SQL
         operation: QueryContext
         type: SQL_DB
@@ -49,32 +49,20 @@ spec:
     type: table
     table:
         cols:
-            - name: id
+            - name: campaign_id
               type: <nil>
               precision: 0
               scale: 0
-            - name: status
+            - name: count
               type: <nil>
               precision: 0
               scale: 0
-            - name: to_send
-              type: <nil>
-              precision: 0
-              scale: 0
-            - name: sent
-              type: <nil>
-              precision: 0
-              scale: 0
-            - name: started_at
-              type: <nil>
-              precision: 0
-              scale: 0
-            - name: updated_at
+            - name: timestamp
               type: <nil>
               precision: 0
               scale: 0
         rows:
-            - '[`<nil>` | `<nil>` | `<nil>` | `<nil>` | `<nil>` | `<nil>` | ]'
+            - '[`<nil>` | `<nil>` | `<nil>` | ]'
     int: 0
     error:
         - EOF

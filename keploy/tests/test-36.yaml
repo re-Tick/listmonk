@@ -4,31 +4,30 @@ name: test-36
 spec:
     metadata: {}
     req:
-        method: GET
+        method: PUT
         proto_major: 1
         proto_minor: 1
-        url: /api/subscribers/0
+        url: /api/subscribers/query/delete
         header:
             Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
             Accept-Encoding: gzip, deflate, br
             Authorization: Basic bGlzdG1vbms6bGlzdG1vbms=
             Connection: keep-alive
-            Content-Length: "37"
-            Content-Type: application/json
+            Content-Length: "0"
             Cookie: connect.sid=s%3AdxWsE0jhYYsXQwFQKZJhtK_5Jli7MPB1.Wjbj0YQ3J7yJE1Zx21NQAWPtrz1f8i73j9FAnlvbrSg
-            Postman-Token: 945fa294-43a0-4cfe-a519-75283e0e019c
+            Postman-Token: fb1f8896-a3a1-40e7-a05a-06ae637957be
             Sec-Fetch-Dest: iframe
             Sec-Fetch-Mode: navigate
             Sec-Fetch-Site: same-origin
             Sec-Gpc: '"1"'
             Upgrade-Insecure-Requests: '"1"'
-        body: '{"email":"jain.ritik.1001@gmail.com"}'
+        body: ""
         body_type: ""
     resp:
-        status_code: 400
+        status_code: 404
         header:
             Content-Type: application/json; charset=UTF-8
-        body: Invalid ID(s)
+        body: Not Found
         body_type: ""
         status_message: ""
         proto_major: 1
@@ -38,4 +37,4 @@ spec:
           data: ""
     assertions:
         noise: []
-    created: 1671364122
+    created: 1671390511

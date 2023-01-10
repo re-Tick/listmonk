@@ -15,7 +15,7 @@ spec:
             Authorization: Basic bGlzdG1vbms6bGlzdG1vbms=
             Connection: keep-alive
             Cookie: connect.sid=s%3AdxWsE0jhYYsXQwFQKZJhtK_5Jli7MPB1.Wjbj0YQ3J7yJE1Zx21NQAWPtrz1f8i73j9FAnlvbrSg
-            Referer: http://localhost:9000/subscription/optin/1d63a2c5-015b-4ddd-ac39-632ae9d57496
+            Referer: http://localhost:9000/subscription/form
             Sec-Fetch-Dest: script
             Sec-Fetch-Mode: no-cors
             Sec-Fetch-Site: same-origin
@@ -37,4 +37,4 @@ spec:
           data: ""
     assertions:
         noise: []
-    created: 1671708478
+    created: 1671712655

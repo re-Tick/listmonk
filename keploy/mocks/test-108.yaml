@@ -5,7 +5,7 @@ spec:
     metadata:
         name: SQL
         operation: PrepareContext
-        query: '"SELECT id, status, to_send, sent, started_at, updated_at FROM campaigns WHERE status=$1;"'
+        query: '"WITH tpl AS ( DELETE FROM templates WHERE id = $1 AND (SELECT COUNT(id) FROM templates) > 1 AND is_default = false RETURNING id ), def AS ( SELECT id FROM templates WHERE is_default = true AND type=''campaign'' LIMIT 1 ), up AS ( UPDATE campaigns SET template_id = (SELECT id FROM def) WHERE (SELECT id FROM tpl) > 0 AND template_id = $1 ) SELECT id FROM tpl;"'
         type: SQL_DB
     type: error
     int: 0
@@ -29,7 +29,7 @@ kind: SQL
 name: test-108-2
 spec:
     metadata:
-        arguments: '[{ 1 running}]'
+        arguments: '[{ 1 2}]'
         name: SQL
         operation: QueryContext
         type: SQL_DB
@@ -53,35 +53,11 @@ spec:
               type: int64
               precision: 0
               scale: 0
-            - name: status
-              type: '[]uint8'
-              precision: 0
-              scale: 0
-            - name: to_send
-              type: int64
-              precision: 0
-              scale: 0
-            - name: sent
-              type: int64
-              precision: 0
-              scale: 0
-            - name: started_at
-              type: <nil>
-              precision: 0
-              scale: 0
-            - name: updated_at
-              type: time.Time
-              precision: 0
-              scale: 0
         rows:
-            - '[`12` | `[114 117 110 110 105 110 103]` | `0` | `0` | `<nil>` | `"2022-12-18T19:39:38.256064Z"` | ]'
-            - '[`13` | `[114 117 110 110 105 110 103]` | `0` | `0` | `<nil>` | `"2022-12-18T19:40:05.387203Z"` | ]'
-            - '[`13` | `[114 117 110 110 105 110 103]` | `0` | `0` | `<nil>` | `"2022-12-18T19:40:05.387203Z"` | ]'
+            - '[`2` | ]'
     int: 0
     error:
         - nil
-        - nil
-        - EOF
         - nil
 ---
 version: api.keploy.io/v1beta1

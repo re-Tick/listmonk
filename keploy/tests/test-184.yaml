@@ -4,34 +4,31 @@ name: test-184
 spec:
     metadata: {}
     req:
-        method: POST
+        method: GET
         proto_major: 1
         proto_minor: 1
-        url: /api/campaigns/12/test
+        url: /api/campaigns?page=1&query=&order_by=created_at&order=desc
         header:
             Accept: application/json, text/plain, */*
             Accept-Encoding: gzip, deflate, br
             Accept-Language: en-GB,en
             Authorization: Basic bGlzdG1vbms6bGlzdG1vbms=
             Connection: keep-alive
-            Content-Length: "559"
-            Content-Type: application/json
             Cookie: connect.sid=s%3AdxWsE0jhYYsXQwFQKZJhtK_5Jli7MPB1.Wjbj0YQ3J7yJE1Zx21NQAWPtrz1f8i73j9FAnlvbrSg
-            Origin: http://localhost:9000
-            Referer: http://localhost:9000/admin/campaigns/12
+            Referer: http://localhost:9000/admin/campaigns
             Sec-Fetch-Dest: empty
             Sec-Fetch-Mode: cors
             Sec-Fetch-Site: same-origin
             Sec-Gpc: "1"
             User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36
-        body: '{"id":12,"name":"sample-optin","subject":"sample-optin","lists":[3],"from_email":"ritik@keploy.io","messenger":"email","type":"regular","headers":[],"tags":[],"template_id":1,"content_type":"richtext","body":"\n\n<p>Hi {{.Subscriber.FirstName }}</p>\n<p>You have been added to the following lists:</p>\n<ul>\n    \n        \n            <li>Private list</li>\n        \n    \n</ul>\n<p>\n    <a class=\"button\" href=\"{{ OptinURL }}l=df69e33d-e1f4-4f9b-a53b-9e059396cf3a\">Confirm subscription</a>\n</p>\n","altbody":null,"subscribers":["sarthak@keploy.io"]}'
+        body: ""
         body_type: ""
     resp:
         status_code: 200
         header:
             Content-Type: application/json; charset=UTF-8
         body: |
-            {"data":true}
+            {"data":{"results":[{"id":2,"created_at":"2022-12-28T10:13:02.138276Z","updated_at":"2022-12-28T10:15:36.016323Z","views":0,"clicks":0,"bounces":0,"lists":[{"id":1,"name":"Default list"}],"started_at":null,"to_send":1,"sent":0,"uuid":"d8461f53-58aa-49c8-a3ec-826039279863","type":"regular","name":"User-interview","subject":"test coverage","from_email":"ritik@keploy.io","body":"\u003cp\u003eGreeting everyone, Starting the program to get user feedback. Please join the event at 26-Jan 5:00pm.\u003c/p\u003e","altbody":null,"send_at":null,"status":"running","content_type":"richtext","tags":[],"headers":[],"template_id":1,"messenger":"email","archive":false,"archive_template_id":0,"archive_meta":null},{"id":1,"created_at":"2022-12-27T11:03:00.58117Z","updated_at":"2022-12-27T11:03:00.58117Z","views":0,"clicks":0,"bounces":0,"lists":[{"id":1,"name":"Default list"}],"started_at":null,"to_send":0,"sent":0,"uuid":"735dd8cc-f50a-4805-80e4-ea6bcc5d29af","type":"regular","name":"Test campaign","subject":"Welcome to listmonk","from_email":"No Reply \u003cnoreply@yoursite.com\u003e","body":"\u003ch3\u003eHi {{ .Subscriber.FirstName }}!\u003c/h3\u003e\n\t\t\u003cp\u003eThis is a test e-mail campaign. Your second name is {{ .Subscriber.LastName }} and you are from {{ .Subscriber.Attribs.city }}.\u003c/p\u003e\n\t\t\u003cp\u003eHere is a \u003ca href=\"https://listmonk.app@TrackLink\"\u003etracked link\u003c/a\u003e.\u003c/p\u003e\n\t\t\u003cp\u003eUse the link icon in the editor toolbar or when writing raw HTML or Markdown,\n\t\t\tsimply suffix @TrackLink to the end of a URL to turn it into a tracking link. Example:\u003c/p\u003e\n\t\t\u003cpre\u003e\u0026lt;a href=\u0026quot;https:/\u0026zwnj;/listmonk.app\u0026#064;TrackLink\u0026quot;\u0026gt;\u0026lt;/a\u0026gt;\u003c/pre\u003e\n\t\t\u003cp\u003eFor help, refer to the \u003ca href=\"https://listmonk.app/docs\"\u003edocumentation\u003c/a\u003e.\u003c/p\u003e\n\t\t","altbody":null,"send_at":null,"status":"draft","content_type":"richtext","tags":["test-campaign"],"headers":[],"template_id":1,"messenger":"email","archive":false,"archive_template_id":0,"archive_meta":null}],"query":"","total":2,"per_page":20,"page":1}}
         body_type: ""
         status_message: ""
         proto_major: 1
@@ -47,14 +44,6 @@ spec:
         - test-184-4
         - test-184-5
         - test-184-6
-        - test-184-7
-        - test-184-8
-        - test-184-9
-        - test-184-10
-        - test-184-11
-        - test-184-12
-        - test-184-13
-        - test-184-14
     assertions:
         noise: []
-    created: 1671793142
+    created: 1672222536

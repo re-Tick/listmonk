@@ -4,32 +4,44 @@ name: test-194
 spec:
     metadata: {}
     req:
-        method: DELETE
+        method: PUT
         proto_major: 1
         proto_minor: 1
-        url: /api/maintenance/subscriptions/unconfirmed
+        url: /api/lists/2
         header:
             Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
             Accept-Encoding: gzip, deflate, br
             Authorization: Basic bGlzdG1vbms6bGlzdG1vbms=
             Connection: keep-alive
-            Content-Length: "186"
-            Content-Type: multipart/form-data; boundary=--------------------------497685016774403744629583
+            Content-Length: "204"
+            Content-Type: application/json
             Cookie: connect.sid=s%3AdxWsE0jhYYsXQwFQKZJhtK_5Jli7MPB1.Wjbj0YQ3J7yJE1Zx21NQAWPtrz1f8i73j9FAnlvbrSg
-            Postman-Token: 69a3d9f2-a4d5-40c8-ac38-6f6a39de5add
+            Postman-Token: c50beccd-b7e2-448b-9a6b-c040d1145acf
             Sec-Fetch-Dest: iframe
             Sec-Fetch-Mode: navigate
             Sec-Fetch-Site: same-origin
             Sec-Gpc: '"1"'
             Upgrade-Insecure-Requests: '"1"'
-        body: LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLTQ5NzY4NTAxNjc3NDQwMzc0NDYyOTU4Mw0KQ29udGVudC1EaXNwb3NpdGlvbjogZm9ybS1kYXRhOyBuYW1lPSJiZWZvcmVfZGF0ZSINCg0KMjAyMi0xMi0yOFQwNTowNDowNVoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS00OTc2ODUwMTY3NzQ0MDM3NDQ2Mjk1ODMtLQ0K
+        body: |-
+            {
+                "id": 2,
+                "name": "Opt-in list",
+                "type": "public",
+                "optin": "double",
+                "tags": [
+                    "test"
+                ],
+                "description": "",
+                "subscriber_count": 0,
+                "subscriber_statuses": {}
+            }
         body_type: ""
     resp:
         status_code: 200
         header:
             Content-Type: application/json; charset=UTF-8
         body: |
-            {"data":{"count":0}}
+            {"data":{"id":2,"created_at":"2023-01-06T07:39:21.463894Z","updated_at":"2023-01-07T08:47:33.929849Z","uuid":"868257b6-7945-415f-83c9-4f880bf707db","name":"Opt-in list","type":"public","optin":"double","tags":["test"],"description":"","subscriber_count":0,"subscriber_statuses":{},"subscription_created_at":null,"subscription_updated_at":null}}
         body_type: ""
         status_message: ""
         proto_major: 1
@@ -44,6 +56,8 @@ spec:
         - test-194-3
         - test-194-4
         - test-194-5
+        - test-194-6
+        - test-194-7
     assertions:
         noise: []
-    created: 1672220294
+    created: 1673081253

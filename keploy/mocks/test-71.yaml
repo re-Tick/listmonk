@@ -3,9 +3,10 @@ kind: SQL
 name: test-71-0
 spec:
     metadata:
+        arguments: '[{ 1 0} { 2 {}} { 3 } { 4 0} { 5 20}]'
         name: SQL
-        operation: PrepareContext
-        query: '"SELECT campaigns.*, COALESCE(templates.body, (SELECT body FROM templates WHERE is_default = true LIMIT 1)) AS template_body FROM campaigns LEFT JOIN templates ON ( CASE WHEN $3 = ''default'' THEN templates.id = campaigns.template_id ELSE templates.id = campaigns.archive_template_id END ) WHERE CASE WHEN $1 > 0 THEN campaigns.id = $1 ELSE uuid = $2 END;"'
+        operation: QueryContext
+        query: '"SELECT  c.id, c.uuid, c.name, c.subject, c.from_email, c.messenger, c.started_at, c.to_send, c.sent, c.type, c.body, c.altbody, c.send_at, c.headers, c.status, c.content_type, c.tags, c.template_id, c.created_at, c.updated_at, COUNT(*) OVER () AS total, ( SELECT COALESCE(ARRAY_TO_JSON(ARRAY_AGG(l)), ''[]'') FROM ( SELECT COALESCE(campaign_lists.list_id, 0) AS id, campaign_lists.list_name AS name FROM campaign_lists WHERE campaign_lists.campaign_id = c.id ) l ) AS lists FROM campaigns c WHERE ($1 = 0 OR id = $1) AND status=ANY(CASE WHEN CARDINALITY($2::campaign_status[]) != 0 THEN $2::campaign_status[] ELSE ARRAY[status] END) AND ($3 = '''' OR CONCAT(name, subject) ILIKE $3) ORDER BY created_at desc OFFSET $4 LIMIT (CASE WHEN $5 = 0 THEN NULL ELSE $5 END);"'
         type: SQL_DB
     type: error
     int: 0
@@ -15,33 +16,6 @@ spec:
 version: api.keploy.io/v1beta1
 kind: SQL
 name: test-71-1
-spec:
-    metadata:
-        name: SQL
-        operation: PrepareContext.NumInput
-        type: SQL_DB
-    type: int
-    int: 3
-    error:
-        - nil
----
-version: api.keploy.io/v1beta1
-kind: SQL
-name: test-71-2
-spec:
-    metadata:
-        arguments: '[{ 1 1} { 2 <nil>} { 3 default}]'
-        name: SQL
-        operation: QueryContext
-        type: SQL_DB
-    type: error
-    int: 0
-    error:
-        - nil
----
-version: api.keploy.io/v1beta1
-kind: SQL
-name: test-71-3
 spec:
     metadata:
         name: SQL
@@ -70,44 +44,12 @@ spec:
               type: string
               precision: 0
               scale: 0
-            - name: body
-              type: string
-              precision: 0
-              scale: 0
-            - name: altbody
-              type: <nil>
-              precision: 0
-              scale: 0
-            - name: content_type
-              type: '[]uint8'
-              precision: 0
-              scale: 0
-            - name: send_at
-              type: <nil>
-              precision: 0
-              scale: 0
-            - name: headers
-              type: '[]uint8'
-              precision: 0
-              scale: 0
-            - name: status
-              type: '[]uint8'
-              precision: 0
-              scale: 0
-            - name: tags
-              type: '[]uint8'
-              precision: 0
-              scale: 0
-            - name: type
-              type: '[]uint8'
-              precision: 0
-              scale: 0
             - name: messenger
               type: string
               precision: 0
               scale: 0
-            - name: template_id
-              type: int64
+            - name: started_at
+              type: time.Time
               precision: 0
               scale: 0
             - name: to_send
@@ -118,28 +60,40 @@ spec:
               type: int64
               precision: 0
               scale: 0
-            - name: max_subscriber_id
-              type: int64
-              precision: 0
-              scale: 0
-            - name: last_subscriber_id
-              type: int64
-              precision: 0
-              scale: 0
-            - name: archive
-              type: bool
-              precision: 0
-              scale: 0
-            - name: archive_template_id
-              type: int64
-              precision: 0
-              scale: 0
-            - name: archive_meta
+            - name: type
               type: '[]uint8'
               precision: 0
               scale: 0
-            - name: started_at
-              type: <nil>
+            - name: body
+              type: string
+              precision: 0
+              scale: 0
+            - name: altbody
+              type: string
+              precision: 0
+              scale: 0
+            - name: send_at
+              type: time.Time
+              precision: 0
+              scale: 0
+            - name: headers
+              type: '[]uint8'
+              precision: 0
+              scale: 0
+            - name: status
+              type: '[]uint8'
+              precision: 0
+              scale: 0
+            - name: content_type
+              type: '[]uint8'
+              precision: 0
+              scale: 0
+            - name: tags
+              type: '[]uint8'
+              precision: 0
+              scale: 0
+            - name: template_id
+              type: int64
               precision: 0
               scale: 0
             - name: created_at
@@ -150,35 +104,42 @@ spec:
               type: time.Time
               precision: 0
               scale: 0
-            - name: template_body
-              type: string
+            - name: total
+              type: int64
+              precision: 0
+              scale: 0
+            - name: lists
+              type: '[]uint8'
               precision: 0
               scale: 0
         rows:
-            - "[`1` | `[48 100 55 54 49 55 52 98 45 102 52 101 99 45 52 53 52 55 45 56 55 50 54 45 100 51 99 51 51 55 56 52 56 56 51 49]` | `Test campaign` | `Welcome to listmonk` | `No Reply <noreply@yoursite.com>` | `<h3>Hi {{ .Subscriber.FirstName }}!</h3>\n\t\t<p>This is a test e-mail campaign. Your second name is {{ .Subscriber.LastName }} and you are from {{ .Subscriber.Attribs.city }}.</p>\n\t\t<p>Here is a <a href=\"https://listmonk.app@TrackLink\">tracked link</a>.</p>\n\t\t<p>Use the link icon in the editor toolbar or when writing raw HTML or Markdown,\n\t\t\tsimply suffix @TrackLink to the end of a URL to turn it into a tracking link. Example:</p>\n\t\t<pre>&lt;a href=&quot;https:/&zwnj;/listmonk.app&#064;TrackLink&quot;&gt;&lt;/a&gt;</pre>\n\t\t<p>For help, refer to the <a href=\"https://listmonk.app/docs\">documentation</a>.</p>\n\t\t` | `<nil>` | `[114 105 99 104 116 101 120 116]` | `<nil>` | `[91 93]` | `[100 114 97 102 116]` | `[123 116 101 115 116 45 99 97 109 112 97 105 103 110 125]` | `[114 101 103 117 108 97 114]` | `email` | `1` | `0` | `0` | `0` | `0` | `false` | `2` | `[123 34 110 97 109 101 34 58 32 34 83 117 98 115 99 114 105 98 101 114 34 125]` | `<nil>` | `\"2023-01-06T07:39:21.468161Z\"` | `\"2023-01-06T07:39:21.468161Z\"` | `<!doctype html>\n<html>\n    <head>\n        <title>{{ .Campaign.Subject }}</title>\n        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1\">\n        <base target=\"_blank\">\n        <style>\n            body {\n                background-color: #F0F1F3;\n                font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;\n                font-size: 15px;\n                line-height: 26px;\n                margin: 0;\n                color: #444;\n            }\n\n            pre {\n                background: #f4f4f4f4;\n                padding: 2px;\n            }\n\n            table {\n                width: 100%;\n                border: 1px solid #ddd;\n            }\n            table td {\n                border-color: #ddd;\n                padding: 5px;\n            }\n\n            .wrap {\n                background-color: #fff;\n                padding: 30px;\n                max-width: 525px;\n                margin: 0 auto;\n                border-radius: 5px;\n            }\n\n            .button {\n                background: #0055d4;\n                border-radius: 3px;\n                text-decoration: none !important;\n                color: #fff !important;\n                font-weight: bold;\n                padding: 10px 30px;\n                display: inline-block;\n            }\n            .button:hover {\n                background: #111;\n            }\n\n            .footer {\n                text-align: center;\n                font-size: 12px;\n                color: #888;\n            }\n                .footer a {\n                    color: #888;\n                    margin-right: 5px;\n                }\n\n            .gutter {\n                padding: 30px;\n            }\n\n            img {\n                max-width: 100%;\n                height: auto;\n            }\n\n            a {\n                color: #0055d4;\n            }\n                a:hover {\n                    color: #111;\n                }\n            @media screen and (max-width: 600px) {\n                .wrap {\n                    max-width: auto;\n                }\n                .gutter {\n                    padding: 10px;\n                }\n            }\n        </style>\n    </head>\n<body style=\"background-color: #F0F1F3;font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;font-size: 15px;line-height: 26px;margin: 0;color: #444;\">\n    <div class=\"gutter\" style=\"padding: 30px;\">&nbsp;</div>\n    <div class=\"wrap\" style=\"background-color: #fff;padding: 30px;max-width: 525px;margin: 0 auto;border-radius: 5px;\">\n        {{ template \"content\" . }}\n    </div>\n    \n    <div class=\"footer\" style=\"text-align: center;font-size: 12px;color: #888;\">\n        <p>\n            {{ L.T \"email.unsubHelp\" }}\n            <a href=\"{{ UnsubscribeURL }}\" style=\"color: #888;\">{{ L.T \"email.unsub\" }}</a>\n            <a href=\"{{ MessageURL }}\" style=\"color: #888;\">{{ L.T \"email.viewInBrowser\" }}</a>\n        </p>\n        <p>Powered by <a href=\"https://listmonk.app\" target=\"_blank\" style=\"color: #888;\">listmonk</a></p>\n    </div>\n    <div class=\"gutter\" style=\"padding: 30px;\">&nbsp;{{ TrackView }}</div>\n</body>\n</html>\n` | ]"
-            - "[`1` | `[48 100 55 54 49 55 52 98 45 102 52 101 99 45 52 53 52 55 45 56 55 50 54 45 100 51 99 51 51 55 56 52 56 56 51 49]` | `Test campaign` | `Welcome to listmonk` | `No Reply <noreply@yoursite.com>` | `<h3>Hi {{ .Subscriber.FirstName }}!</h3>\n\t\t<p>This is a test e-mail campaign. Your second name is {{ .Subscriber.LastName }} and you are from {{ .Subscriber.Attribs.city }}.</p>\n\t\t<p>Here is a <a href=\"https://listmonk.app@TrackLink\">tracked link</a>.</p>\n\t\t<p>Use the link icon in the editor toolbar or when writing raw HTML or Markdown,\n\t\t\tsimply suffix @TrackLink to the end of a URL to turn it into a tracking link. Example:</p>\n\t\t<pre>&lt;a href=&quot;https:/&zwnj;/listmonk.app&#064;TrackLink&quot;&gt;&lt;/a&gt;</pre>\n\t\t<p>For help, refer to the <a href=\"https://listmonk.app/docs\">documentation</a>.</p>\n\t\t` | `<nil>` | `[114 105 99 104 116 101 120 116]` | `<nil>` | `[91 93]` | `[100 114 97 102 116]` | `[123 116 101 115 116 45 99 97 109 112 97 105 103 110 125]` | `[114 101 103 117 108 97 114]` | `email` | `1` | `0` | `0` | `0` | `0` | `false` | `2` | `[123 34 110 97 109 101 34 58 32 34 83 117 98 115 99 114 105 98 101 114 34 125]` | `<nil>` | `\"2023-01-06T07:39:21.468161Z\"` | `\"2023-01-06T07:39:21.468161Z\"` | `<!doctype html>\n<html>\n    <head>\n        <title>{{ .Campaign.Subject }}</title>\n        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1\">\n        <base target=\"_blank\">\n        <style>\n            body {\n                background-color: #F0F1F3;\n                font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;\n                font-size: 15px;\n                line-height: 26px;\n                margin: 0;\n                color: #444;\n            }\n\n            pre {\n                background: #f4f4f4f4;\n                padding: 2px;\n            }\n\n            table {\n                width: 100%;\n                border: 1px solid #ddd;\n            }\n            table td {\n                border-color: #ddd;\n                padding: 5px;\n            }\n\n            .wrap {\n                background-color: #fff;\n                padding: 30px;\n                max-width: 525px;\n                margin: 0 auto;\n                border-radius: 5px;\n            }\n\n            .button {\n                background: #0055d4;\n                border-radius: 3px;\n                text-decoration: none !important;\n                color: #fff !important;\n                font-weight: bold;\n                padding: 10px 30px;\n                display: inline-block;\n            }\n            .button:hover {\n                background: #111;\n            }\n\n            .footer {\n                text-align: center;\n                font-size: 12px;\n                color: #888;\n            }\n                .footer a {\n                    color: #888;\n                    margin-right: 5px;\n                }\n\n            .gutter {\n                padding: 30px;\n            }\n\n            img {\n                max-width: 100%;\n                height: auto;\n            }\n\n            a {\n                color: #0055d4;\n            }\n                a:hover {\n                    color: #111;\n                }\n            @media screen and (max-width: 600px) {\n                .wrap {\n                    max-width: auto;\n                }\n                .gutter {\n                    padding: 10px;\n                }\n            }\n        </style>\n    </head>\n<body style=\"background-color: #F0F1F3;font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, sans-serif;font-size: 15px;line-height: 26px;margin: 0;color: #444;\">\n    <div class=\"gutter\" style=\"padding: 30px;\">&nbsp;</div>\n    <div class=\"wrap\" style=\"background-color: #fff;padding: 30px;max-width: 525px;margin: 0 auto;border-radius: 5px;\">\n        {{ template \"content\" . }}\n    </div>\n    \n    <div class=\"footer\" style=\"text-align: center;font-size: 12px;color: #888;\">\n        <p>\n            {{ L.T \"email.unsubHelp\" }}\n            <a href=\"{{ UnsubscribeURL }}\" style=\"color: #888;\">{{ L.T \"email.unsub\" }}</a>\n            <a href=\"{{ MessageURL }}\" style=\"color: #888;\">{{ L.T \"email.viewInBrowser\" }}</a>\n        </p>\n        <p>Powered by <a href=\"https://listmonk.app\" target=\"_blank\" style=\"color: #888;\">listmonk</a></p>\n    </div>\n    <div class=\"gutter\" style=\"padding: 30px;\">&nbsp;{{ TrackView }}</div>\n</body>\n</html>\n` | ]"
+            - '[`12` | `[48 52 98 98 101 102 49 99 45 54 97 53 48 45 52 56 102 51 45 57 54 53 49 45 52 52 53 55 98 50 48 101 98 56 54 54]` | `qwertt2` | `keploy` | `ritik@keploy.io` | `email` | `<nil>` | `0` | `0` | `[114 101 103 117 108 97 114]` | `<p>greetings</p>` | `<nil>` | `<nil>` | `[91 93]` | `[114 117 110 110 105 110 103]` | `[114 105 99 104 116 101 120 116]` | `<nil>` | `1` | `"2022-12-18T19:39:24.793843Z"` | `"2022-12-18T19:39:38.256064Z"` | `8` | `[91 123 34 105 100 34 58 53 44 34 110 97 109 101 34 58 34 82 105 116 105 107 34 125 44 123 34 105 100 34 58 49 48 44 34 110 97 109 101 34 58 34 83 97 114 116 104 97 107 34 125 44 123 34 105 100 34 58 49 49 44 34 110 97 109 101 34 58 34 113 119 101 114 116 121 34 125 93]` | ]'
+            - "[`11` | `[98 51 52 53 98 57 102 98 45 100 101 48 97 45 52 98 48 97 45 97 55 49 100 45 54 98 57 102 49 97 97 48 48 102 51 54]` | `Copy of Opt-in to qwerty` | `Confirm subscription(s) to qwerty` | `listmonk <noreply@listmonk.yoursite.com>` | `email` | `<nil>` | `0` | `0` | `[111 112 116 105 110]` | `\n\n<p>Hi {{.Subscriber.FirstName }}</p>\n<p>You have been added to the following lists:</p>\n<ul>\n    \n        \n            <li>qwerty</li>\n        \n    \n</ul>\n<p>\n    <a class=\"button\" href=\"{{ OptinURL }}l=f79a73f7-1687-4951-adbf-3cfa79e7b9ad\">Confirm subscription</a>\n</p>\n` | `<nil>` | `<nil>` | `[91 93]` | `[99 97 110 99 101 108 108 101 100]` | `[114 105 99 104 116 101 120 116]` | `<nil>` | `1` | `\"2022-12-16T10:51:51.484671Z\"` | `\"2022-12-17T07:49:57.829176Z\"` | `8` | `[91 123 34 105 100 34 58 49 49 44 34 110 97 109 101 34 58 34 113 119 101 114 116 121 34 125 93]` | ]"
+            - "[`10` | `[99 98 55 52 55 51 54 49 45 101 48 100 98 45 52 49 99 102 45 57 49 54 48 45 52 49 99 57 54 102 54 56 56 56 100 48]` | `Opt-in to qwerty` | `Confirm subscription(s) to qwerty` | `listmonk <noreply@listmonk.yoursite.com>` | `email` | `<nil>` | `0` | `0` | `[111 112 116 105 110]` | `\n\n<p>Hi {{.Subscriber.FirstName }}</p>\n<p>You have been added to the following lists:</p>\n<ul>\n    \n        \n            <li>qwerty</li>\n        \n    \n</ul>\n<p>\n    <a class=\"button\" href=\"{{ OptinURL }}l=f79a73f7-1687-4951-adbf-3cfa79e7b9ad\">Confirm subscription</a>\n</p>\n` | `<nil>` | `<nil>` | `[91 93]` | `[99 97 110 99 101 108 108 101 100]` | `[114 105 99 104 116 101 120 116]` | `<nil>` | `1` | `\"2022-12-16T10:50:37.517643Z\"` | `\"2022-12-16T10:52:04.912655Z\"` | `8` | `[91 123 34 105 100 34 58 49 49 44 34 110 97 109 101 34 58 34 113 119 101 114 116 121 34 125 93]` | ]"
+            - |-
+              [`9` | `[53 49 53 51 57 49 57 50 45 57 98 54 49 45 52 48 56 48 45 98 51 50 56 45 99 56 99 57 51 54 100 56 99 49 52 57]` | `qwerty` | `keploy` | `sarthak@keploy.io` | `email` | `<nil>` | `0` | `0` | `[114 101 103 117 108 97 114]` | `<p>test</p>` | `test
+              ` | `<nil>` | `[91 93]` | `[99 97 110 99 101 108 108 101 100]` | `[114 105 99 104 116 101 120 116]` | `[123 119 97 115 100 125]` | `1` | `"2022-12-16T08:34:21.182088Z"` | `"2022-12-16T08:35:00.164904Z"` | `8` | `[91 123 34 105 100 34 58 49 44 34 110 97 109 101 34 58 34 68 101 102 97 117 108 116 32 108 105 115 116 34 125 44 123 34 105 100 34 58 49 48 44 34 110 97 109 101 34 58 34 83 97 114 116 104 97 107 34 125 93]` | ]
+            - '[`6` | `[55 48 48 56 53 101 49 101 45 52 97 54 101 45 52 50 99 99 45 97 49 55 55 45 99 99 54 53 57 54 48 97 56 49 100 52]` | `testing` | `testing` | `ritik@keploy.io` | `email` | `"2022-12-06T11:10:55.73563Z"` | `1` | `1` | `[114 101 103 117 108 97 114]` | `` | `<nil>` | `<nil>` | `[91 93]` | `[102 105 110 105 115 104 101 100]` | `[114 105 99 104 116 101 120 116]` | `<nil>` | `1` | `"2022-11-24T06:38:49.700155Z"` | `"2022-12-06T11:10:55.761091Z"` | `8` | `[91 123 34 105 100 34 58 49 44 34 110 97 109 101 34 58 34 68 101 102 97 117 108 116 32 108 105 115 116 34 125 93]` | ]'
+            - '[`4` | `[51 99 97 53 97 98 57 52 45 50 100 52 99 45 52 51 57 100 45 97 55 48 51 45 48 100 50 101 54 102 54 97 49 57 101 100]` | `dua` | `k` | `listmonk <noreply@listmonk.yoursite.com>` | `email` | `"2022-11-03T10:20:06.042114Z"` | `0` | `0` | `[114 101 103 117 108 97 114]` | `` | `<nil>` | `<nil>` | `[91 93]` | `[102 105 110 105 115 104 101 100]` | `[114 105 99 104 116 101 120 116]` | `<nil>` | `1` | `"2022-11-03T10:19:58.23267Z"` | `"2022-11-03T10:20:06.088097Z"` | `8` | `[91 123 34 105 100 34 58 49 44 34 110 97 109 101 34 58 34 68 101 102 97 117 108 116 32 108 105 115 116 34 125 93]` | ]'
+            - '[`3` | `[97 54 98 102 48 57 56 56 45 102 98 55 100 45 52 56 99 57 45 56 50 52 53 45 102 56 52 98 50 48 50 52 54 56 98 101]` | `Sarthak` | `keploy` | `listmonk <noreply@listmonk.yoursite.com>` | `email` | `"2022-11-03T07:32:06.988154Z"` | `0` | `0` | `[114 101 103 117 108 97 114]` | `` | `<nil>` | `"2022-11-02T18:30:00Z"` | `[91 123 34 80 117 114 112 111 115 101 34 58 32 34 84 111 32 104 97 110 100 108 101 32 100 101 112 115 34 125 93]` | `[102 105 110 105 115 104 101 100]` | `[114 105 99 104 116 101 120 116]` | `<nil>` | `1` | `"2022-11-02T06:29:34.585202Z"` | `"2022-11-03T07:32:07.034394Z"` | `8` | `[91 123 34 105 100 34 58 49 44 34 110 97 109 101 34 58 34 68 101 102 97 117 108 116 32 108 105 115 116 34 125 93]` | ]'
+            - '[`2` | `[98 51 98 51 55 54 56 52 45 98 55 57 51 45 52 54 54 50 45 97 57 53 54 45 98 97 55 51 52 102 99 98 55 57 51 100]` | `Ritik Jain` | `xyz` | `listmonk <noreply@listmonk.yoursite.com>` | `email` | `"2022-10-31T06:33:15.011435Z"` | `0` | `0` | `[114 101 103 117 108 97 114]` | `` | `<nil>` | `<nil>` | `[91 93]` | `[102 105 110 105 115 104 101 100]` | `[114 105 99 104 116 101 120 116]` | `[123 115 97 115 125]` | `1` | `"2022-10-31T06:33:02.712684Z"` | `"2022-10-31T06:33:15.050134Z"` | `8` | `[91 123 34 105 100 34 58 48 44 34 110 97 109 101 34 58 34 79 112 116 45 105 110 32 108 105 115 116 34 125 93]` | ]'
+            - '[`2` | `[98 51 98 51 55 54 56 52 45 98 55 57 51 45 52 54 54 50 45 97 57 53 54 45 98 97 55 51 52 102 99 98 55 57 51 100]` | `Ritik Jain` | `xyz` | `listmonk <noreply@listmonk.yoursite.com>` | `email` | `"2022-10-31T06:33:15.011435Z"` | `0` | `0` | `[114 101 103 117 108 97 114]` | `` | `<nil>` | `<nil>` | `[91 93]` | `[102 105 110 105 115 104 101 100]` | `[114 105 99 104 116 101 120 116]` | `[123 115 97 115 125]` | `1` | `"2022-10-31T06:33:02.712684Z"` | `"2022-10-31T06:33:15.050134Z"` | `8` | `[91 123 34 105 100 34 58 48 44 34 110 97 109 101 34 58 34 79 112 116 45 105 110 32 108 105 115 116 34 125 93]` | ]'
     int: 0
     error:
+        - nil
+        - nil
+        - nil
+        - nil
+        - nil
+        - nil
+        - nil
         - nil
         - EOF
         - nil
 ---
 version: api.keploy.io/v1beta1
 kind: SQL
-name: test-71-4
-spec:
-    metadata:
-        name: SQL
-        operation: PrepareContext.Close
-        type: SQL_DB
-    type: error
-    int: 0
-    error:
-        - nil
----
-version: api.keploy.io/v1beta1
-kind: SQL
-name: test-71-5
+name: test-71-2
 spec:
     metadata:
         name: SQL
@@ -192,7 +153,7 @@ spec:
 ---
 version: api.keploy.io/v1beta1
 kind: SQL
-name: test-71-6
+name: test-71-3
 spec:
     metadata:
         name: SQL
@@ -200,15 +161,14 @@ spec:
         type: SQL_DB
     type: int
     int: 1
-    error:
-        - nil
+    error: []
 ---
 version: api.keploy.io/v1beta1
 kind: SQL
-name: test-71-7
+name: test-71-4
 spec:
     metadata:
-        arguments: '[{ 1 {1}}]'
+        arguments: '[{ 1 {12,11,10,9,6,4,3,2}}]'
         name: SQL
         operation: QueryContext
         type: SQL_DB
@@ -219,7 +179,7 @@ spec:
 ---
 version: api.keploy.io/v1beta1
 kind: SQL
-name: test-71-8
+name: test-71-5
 spec:
     metadata:
         name: SQL
@@ -249,17 +209,31 @@ spec:
               precision: 0
               scale: 0
         rows:
-            - '[`1` | `0` | `0` | `0` | `[91 123 34 105 100 34 32 58 32 49 44 32 34 110 97 109 101 34 32 58 32 34 68 101 102 97 117 108 116 32 108 105 115 116 34 125 93]` | ]'
-            - '[`1` | `0` | `0` | `0` | `[91 123 34 105 100 34 32 58 32 49 44 32 34 110 97 109 101 34 32 58 32 34 68 101 102 97 117 108 116 32 108 105 115 116 34 125 93]` | ]'
+            - '[`12` | `0` | `0` | `0` | `[91 123 34 105 100 34 32 58 32 53 44 32 34 110 97 109 101 34 32 58 32 34 82 105 116 105 107 34 125 44 32 123 34 105 100 34 32 58 32 49 48 44 32 34 110 97 109 101 34 32 58 32 34 83 97 114 116 104 97 107 34 125 44 32 123 34 105 100 34 32 58 32 49 49 44 32 34 110 97 109 101 34 32 58 32 34 113 119 101 114 116 121 34 125 93]` | ]'
+            - '[`11` | `0` | `0` | `0` | `[91 123 34 105 100 34 32 58 32 49 49 44 32 34 110 97 109 101 34 32 58 32 34 113 119 101 114 116 121 34 125 93]` | ]'
+            - '[`10` | `0` | `0` | `0` | `[91 123 34 105 100 34 32 58 32 49 49 44 32 34 110 97 109 101 34 32 58 32 34 113 119 101 114 116 121 34 125 93]` | ]'
+            - '[`9` | `0` | `0` | `0` | `[91 123 34 105 100 34 32 58 32 49 44 32 34 110 97 109 101 34 32 58 32 34 68 101 102 97 117 108 116 32 108 105 115 116 34 125 44 32 123 34 105 100 34 32 58 32 49 48 44 32 34 110 97 109 101 34 32 58 32 34 83 97 114 116 104 97 107 34 125 93]` | ]'
+            - '[`6` | `0` | `0` | `0` | `[91 123 34 105 100 34 32 58 32 49 44 32 34 110 97 109 101 34 32 58 32 34 68 101 102 97 117 108 116 32 108 105 115 116 34 125 93]` | ]'
+            - '[`4` | `0` | `0` | `0` | `[91 123 34 105 100 34 32 58 32 49 44 32 34 110 97 109 101 34 32 58 32 34 68 101 102 97 117 108 116 32 108 105 115 116 34 125 93]` | ]'
+            - '[`3` | `0` | `0` | `0` | `[91 123 34 105 100 34 32 58 32 49 44 32 34 110 97 109 101 34 32 58 32 34 68 101 102 97 117 108 116 32 108 105 115 116 34 125 93]` | ]'
+            - '[`2` | `0` | `0` | `0` | `[91 123 34 105 100 34 32 58 32 110 117 108 108 44 32 34 110 97 109 101 34 32 58 32 34 79 112 116 45 105 110 32 108 105 115 116 34 125 93]` | ]'
+            - '[`2` | `0` | `0` | `0` | `[91 123 34 105 100 34 32 58 32 110 117 108 108 44 32 34 110 97 109 101 34 32 58 32 34 79 112 116 45 105 110 32 108 105 115 116 34 125 93]` | ]'
     int: 0
     error:
+        - nil
+        - nil
+        - nil
+        - nil
+        - nil
+        - nil
+        - nil
         - nil
         - EOF
         - nil
 ---
 version: api.keploy.io/v1beta1
 kind: SQL
-name: test-71-9
+name: test-71-6
 spec:
     metadata:
         name: SQL

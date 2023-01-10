@@ -4,32 +4,32 @@ name: test-92
 spec:
     metadata: {}
     req:
-        method: PUT
+        method: DELETE
         proto_major: 1
         proto_minor: 1
-        url: /api/campaigns/1
+        url: /api/campaigns/12
         header:
-            Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
+            Accept: application/json, text/plain, */*
             Accept-Encoding: gzip, deflate, br
+            Accept-Language: en-GB,en
             Authorization: Basic bGlzdG1vbms6bGlzdG1vbms=
             Connection: keep-alive
-            Content-Length: "257"
-            Content-Type: application/json
             Cookie: connect.sid=s%3AdxWsE0jhYYsXQwFQKZJhtK_5Jli7MPB1.Wjbj0YQ3J7yJE1Zx21NQAWPtrz1f8i73j9FAnlvbrSg
-            Postman-Token: c1bebff1-e8ad-4ed0-ae55-258c694120f8
-            Sec-Fetch-Dest: iframe
-            Sec-Fetch-Mode: navigate
+            Origin: http://localhost:9000
+            Referer: http://localhost:9000/admin/campaigns
+            Sec-Fetch-Dest: empty
+            Sec-Fetch-Mode: cors
             Sec-Fetch-Site: same-origin
-            Sec-Gpc: '"1"'
-            Upgrade-Insecure-Requests: '"1"'
-        body: '{"name":"qwertt2","subject":"keploy","lists":[1],"from_email":"ritik@keploy.io","messenger":"email","type":"regular","tags":[],"send_later":false,"send_at":null,"headers":[],"template_id":1,"content_type":"richtext","body":"<p>greetings</p>","altbody":null}'
+            Sec-Gpc: "1"
+            User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36
+        body: ""
         body_type: ""
     resp:
         status_code: 200
         header:
             Content-Type: application/json; charset=UTF-8
         body: |
-            {"data":{"id":1,"created_at":"2023-01-06T07:39:21.468161Z","updated_at":"2023-01-09T08:14:32.896793Z","views":0,"clicks":0,"bounces":0,"lists":[{"id":1,"name":"Default list"}],"started_at":null,"to_send":0,"sent":0,"uuid":"0d76174b-f4ec-4547-8726-d3c337848831","type":"regular","name":"qwertt2","subject":"keploy","from_email":"ritik@keploy.io","body":"\u003cp\u003egreetings\u003c/p\u003e","altbody":null,"send_at":null,"status":"draft","content_type":"richtext","tags":[],"headers":[],"template_id":1,"messenger":"email","archive":false,"archive_template_id":2,"archive_meta":{"name":"Subscriber"}}}
+            {"data":true}
         body_type: ""
         status_message: ""
         proto_major: 1
@@ -44,26 +44,6 @@ spec:
         - test-92-3
         - test-92-4
         - test-92-5
-        - test-92-6
-        - test-92-7
-        - test-92-8
-        - test-92-9
-        - test-92-10
-        - test-92-11
-        - test-92-12
-        - test-92-13
-        - test-92-14
-        - test-92-15
-        - test-92-16
-        - test-92-17
-        - test-92-18
-        - test-92-19
-        - test-92-20
-        - test-92-21
-        - test-92-22
-        - test-92-23
-        - test-92-24
-        - test-92-25
     assertions:
         noise: []
-    created: 1671392378
+    created: 1671392420
