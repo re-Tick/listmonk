@@ -154,7 +154,7 @@ func handleCampaignArchivePage(c echo.Context) error {
 }
 
 func getCampaignArchives(ctx context.Context, offset, limit int, app *App) ([]campArchive, int, error) {
-	pubCamps, total, err := app.core.GetArchivedCampaigns(offset, limit)
+	pubCamps, total, err := app.core.GetArchivedCampaigns(ctx, offset, limit)
 	if err != nil {
 		return []campArchive{}, total, echo.NewHTTPError(http.StatusInternalServerError, app.i18n.T("public.errorFetchingCampaign"))
 	}

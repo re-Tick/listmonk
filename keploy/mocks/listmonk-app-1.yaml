@@ -1,4 +1,4 @@
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -11,7 +11,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -26,7 +26,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -41,7 +41,7 @@ spec:
     error:
         - LastInsertId is not supported by this driver
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -56,7 +56,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -75,7 +75,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -97,7 +97,7 @@ spec:
         - nil
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -112,7 +112,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -134,7 +134,7 @@ spec:
         - nil
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -148,7 +148,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -161,7 +161,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -175,7 +175,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -188,7 +188,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -202,7 +202,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -215,7 +215,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -229,7 +229,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -242,7 +242,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -256,7 +256,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -269,7 +269,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -283,7 +283,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -296,7 +296,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -310,7 +310,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -323,7 +323,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -337,7 +337,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -350,7 +350,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -364,7 +364,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -377,7 +377,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -391,7 +391,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -404,7 +404,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -418,7 +418,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -431,7 +431,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -445,7 +445,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -458,7 +458,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -472,7 +472,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -485,7 +485,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -499,7 +499,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -512,7 +512,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -526,7 +526,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -539,7 +539,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -553,7 +553,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -566,7 +566,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -580,7 +580,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -593,7 +593,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -607,7 +607,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -620,7 +620,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -634,7 +634,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -647,7 +647,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -661,7 +661,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -674,7 +674,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -688,7 +688,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -701,7 +701,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -715,7 +715,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -728,7 +728,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -742,7 +742,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -755,7 +755,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -769,7 +769,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -782,7 +782,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -796,7 +796,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -809,7 +809,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -823,7 +823,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -836,7 +836,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -850,7 +850,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -863,7 +863,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -877,7 +877,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -890,7 +890,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -904,7 +904,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -917,7 +917,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -931,7 +931,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -944,7 +944,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -958,7 +958,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -971,7 +971,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -985,7 +985,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -998,7 +998,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1012,7 +1012,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1025,7 +1025,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1039,7 +1039,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1052,7 +1052,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1066,7 +1066,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1079,7 +1079,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1093,7 +1093,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1106,7 +1106,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1120,7 +1120,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1133,7 +1133,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1147,7 +1147,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1160,7 +1160,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1174,7 +1174,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1187,7 +1187,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1201,7 +1201,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1214,7 +1214,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1228,7 +1228,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1241,7 +1241,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1255,7 +1255,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1268,7 +1268,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1282,7 +1282,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1295,7 +1295,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1309,7 +1309,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1322,7 +1322,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1336,7 +1336,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1349,7 +1349,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1363,7 +1363,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1376,7 +1376,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1390,7 +1390,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1403,7 +1403,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1417,7 +1417,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1430,7 +1430,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1444,7 +1444,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1457,7 +1457,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1471,7 +1471,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1484,7 +1484,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1498,7 +1498,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1511,7 +1511,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1525,7 +1525,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1538,7 +1538,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1552,7 +1552,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1565,7 +1565,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1579,7 +1579,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1592,7 +1592,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1606,7 +1606,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1619,7 +1619,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1633,7 +1633,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1646,7 +1646,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1660,7 +1660,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1673,7 +1673,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1687,7 +1687,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1700,7 +1700,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1714,7 +1714,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1727,7 +1727,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1741,7 +1741,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1754,7 +1754,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1768,7 +1768,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1781,7 +1781,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1795,7 +1795,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1808,7 +1808,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1822,7 +1822,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1835,7 +1835,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1849,7 +1849,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1862,7 +1862,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1876,7 +1876,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1889,7 +1889,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1903,7 +1903,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1916,7 +1916,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1930,7 +1930,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1943,7 +1943,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -1957,7 +1957,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -2009,7 +2009,7 @@ spec:
         - EOF
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -2022,7 +2022,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -2036,7 +2036,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -2049,7 +2049,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -2063,7 +2063,7 @@ spec:
     error:
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
@@ -2185,7 +2185,7 @@ spec:
         - EOF
         - nil
 ---
-version: api.keploy.io/v1beta1
+version: api.keploy.io/v1beta2
 kind: SQL
 name: listmonk-app-1
 spec:
