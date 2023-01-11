@@ -1,15 +1,15 @@
-CGO_ENABLED=0 go build -o listmonk -ldflags="-s -w -X 'main.buildString="v0.0.0" (#83b87f7 2023-01-09T09:44:32+0000)' -X 'main.versionString="v0.0.0"' -X 'main.frontendDir=frontend/dist'" cmd/*.go
+CGO_ENABLED=0 go build -o listmonk -ldflags="-s -w -X 'main.buildString="v0.0.0" (#54f5d27 2023-01-11T06:36:39+0000)' -X 'main.versionString="v0.0.0"' -X 'main.frontendDir=frontend/dist'" cmd/*.go
 ./listmonk
 
 💡⚡️ Keploy created new mocking context in record mode  for listmonk-app-1.
  If you dont see any logs about your dependencies below, your dependency/s are NOT wrapped.
-2023/01/09 15:14:35 main.go:140: v0.0.0 (#83b87f7 2023-01-09T09:44:32+0000)
-2023/01/09 15:14:35 init.go:143: reading config: config.toml
-2023/01/09 15:14:35 init.go:286: connecting to db: localhost:9432/listmonk
+2023/01/11 12:06:42 main.go:140: v0.0.0 (#54f5d27 2023-01-11T06:36:39+0000)
+2023/01/11 12:06:42 init.go:143: reading config: config.toml
+2023/01/11 12:06:42 init.go:286: connecting to db: localhost:9432/listmonk
 🟠 Captured the mocked outputs for Http dependency call with meta:  map[name:SQL operation:Ping type:SQL_DB]
-2023/01/09 15:14:35 init.go:199: unable to initialize embedded filesystem (no ID found in the file). Using local filesystem
-2023/01/09 15:14:35 init.go:221: loading i18n files from: i18n
-2023/01/09 15:14:35 init.go:230: loading static files from: static
+2023/01/11 12:06:42 init.go:199: unable to initialize embedded filesystem (no ID found in the file). Using local filesystem
+2023/01/11 12:06:42 init.go:221: loading i18n files from: i18n
+2023/01/11 12:06:42 init.go:230: loading static files from: static
  Called ExecContext with mode:  record
 🟠 Captured the mocked outputs for Http dependency call with meta:  map[arguments:[] name:SQL operation:ExecContext query:"SELECT id FROM templates LIMIT 1" type:SQL_DB]
 🟠 Captured the mocked outputs for Http dependency call with meta:  map[arguments:[] name:SQL operation:ExecContext.LastInsertId query:"SELECT id FROM templates LIMIT 1" type:SQL_DB]
@@ -154,18 +154,23 @@ CGO_ENABLED=0 go build -o listmonk -ldflags="-s -w -X 'main.buildString="v0.0.0"
 🟠 Captured the mocked outputs for Http dependency call with meta:  map[name:SQL operation:PrepareContext query:"WITH sub AS ( SELECT id FROM subscribers WHERE CASE WHEN $1 > 0 THEN id = $1 ELSE uuid = $2 END ) DELETE FROM bounces WHERE subscriber_id = (SELECT id FROM sub);" type:SQL_DB]
 🟠 Captured the mocked outputs for Http dependency call with meta:  map[name:SQL operation:PrepareContext.Close type:SQL_DB]
 mode in main init: record
-2023/01/09 15:14:36 init.go:605: media upload provider: filesystem
+2023/01/11 12:06:43 init.go:605: media upload provider: filesystem
 🟠 Captured the mocked outputs for Http dependency call with meta:  map[name:SQL operation:PrepareContext query:"SELECT id, name, type, subject, (CASE WHEN $2 = false THEN body ELSE '' END) as body, is_default, created_at, updated_at FROM templates WHERE ($1 = 0 OR id = $1) AND ($3 = '' OR type = $3::template_type) ORDER BY created_at;" type:SQL_DB]
 🟠 Captured the mocked outputs for Http dependency call with meta:  map[name:SQL operation:PrepareContext.NumInput type:SQL_DB]
 🟠 Captured the mocked outputs for Http dependency call with meta:  map[arguments:[{ 1 0} { 2 false} { 3 tx}] name:SQL operation:QueryContext type:SQL_DB]
 🟠 Captured the mocked outputs for Http dependency call with meta:  map[name:SQL operation:QueryContext.Close type:SQL_DB]
 🟠 Captured the mocked outputs for Http dependency call with meta:  map[name:SQL operation:PrepareContext.Close type:SQL_DB]
-2023/01/09 15:14:36 bounce.go:84: error initializing sendgrid webhooks: asn1: structure error: tags don't match (16 vs {class:2 tag:22 length:43 isCompound:false}) {optional:false explicit:false application:false private:false defaultValue:<nil> tag:<nil> stringType:0 timeType:0 set:false omitEmpty:false} publicKeyInfo @2
-2023/01/09 15:14:36 init.go:529: loaded email (SMTP) messenger: username@smtp.yoursite.com
+2023/01/11 12:06:43 bounce.go:84: error initializing sendgrid webhooks: asn1: structure error: tags don't match (16 vs {class:2 tag:22 length:43 isCompound:false}) {optional:false explicit:false application:false private:false defaultValue:<nil> tag:<nil> stringType:0 timeType:0 set:false omitEmpty:false} publicKeyInfo @2
+2023/01/11 12:06:43 init.go:529: loaded email (SMTP) messenger: username@smtp.yoursite.com
 ⇨ http server started on 127.0.0.1:9000
 🟠 Captured the mocked outputs for Http dependency call with meta:  map[name:SQL operation:PrepareContext query:"WITH camps AS ( SELECT campaigns.*, COALESCE(templates.body, (SELECT body FROM templates WHERE is_default = true LIMIT 1)) AS template_body FROM campaigns LEFT JOIN templates ON (templates.id = campaigns.template_id) WHERE (status='running' OR (status='scheduled' AND NOW() >= campaigns.send_at)) AND NOT(campaigns.id = ANY($1::INT[])) ), campLists AS ( SELECT lists.id AS list_id, campaign_id, optin FROM lists INNER JOIN campaign_lists ON (campaign_lists.list_id = lists.id) WHERE campaign_lists.campaign_id = ANY(SELECT id FROM camps) ), counts AS ( SELECT id AS campaign_id, COUNT(DISTINCT(subscriber_lists.subscriber_id)) AS to_send, COALESCE(MAX(subscriber_lists.subscriber_id), 0) AS max_subscriber_id FROM camps LEFT JOIN campLists ON (campLists.campaign_id = camps.id) LEFT JOIN subscriber_lists ON ( subscriber_lists.list_id = campLists.list_id AND (CASE WHEN camps.type = 'optin' THEN subscriber_lists.status = 'unconfirmed' AND campLists.optin = 'double' WHEN campLists.optin = 'double' THEN subscriber_lists.status = 'confirmed' ELSE subscriber_lists.status != 'unsubscribed' END) ) GROUP BY camps.id ), u AS ( UPDATE campaigns AS ca SET to_send = co.to_send, status = (CASE WHEN status != 'running' THEN 'running' ELSE status END), max_subscriber_id = co.max_subscriber_id, started_at=(CASE WHEN ca.started_at IS NULL THEN NOW() ELSE ca.started_at END) FROM (SELECT * FROM counts) co WHERE ca.id = co.campaign_id ) SELECT * FROM camps;" type:SQL_DB]
 🟠 Captured the mocked outputs for Http dependency call with meta:  map[name:SQL operation:PrepareContext.NumInput type:SQL_DB]
 🟠 Captured the mocked outputs for Http dependency call with meta:  map[arguments:[{ 1 {}}] name:SQL operation:QueryContext type:SQL_DB]
 🟠 Captured the mocked outputs for Http dependency call with meta:  map[name:SQL operation:QueryContext.Close type:SQL_DB]
 🟠 Captured the mocked outputs for Http dependency call with meta:  map[name:SQL operation:PrepareContext.Close type:SQL_DB]
-2023/01/09 15:14:43 updates.go:47: non 200 response on remote update check: 403
+2023/01/11 12:06:51 updates.go:75: new update v2.3.0 found
+ERROR:  pq: invalid input syntax for type uuid: "123"
+2023/01/11 12:06:55 campaigns.go:97: error fetching campaign: pq: invalid input syntax for type uuid: "123"
+2023/01/11 12:06:56 updates.go:75: new update v2.3.0 found
+ERROR:  pq: invalid input syntax for type uuid: "123"
+2023/01/11 12:06:57 campaigns.go:97: error fetching campaign: pq: invalid input syntax for type uuid: "123"
