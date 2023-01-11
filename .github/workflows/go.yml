@@ -1,8 +1,6 @@
 name: Go
 
 on:
-#  push:
-#    branches: [ main ]
   pull_request:
     branches: [ master ]
 
@@ -23,38 +21,9 @@ jobs:
       - name: Install-Keploy
         run: |
           cat config.toml.sample > config.toml
-#          make build
-#          ./listmonk --new-config
-
 
       - name: Test
         run: |
           curl --silent --location "https://github.com/keploy/keploy/releases/latest/download/keploy_linux_amd64.tar.gz" | tar xz -C /tmp 
           sudo mv /tmp/keploy /usr/local/bin && keploy &
-          cat config.toml
           make test
-        
-#       - uses: codecov/codecov-action@v2
-#         with:
-#           files: ./coverage.txt
-      # - name: Install goveralls
-      #   run: go install github.com/mattn/goveralls@latest
-      # - name: Send coverage
-      #   env:
-      #     COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   run: |
-      #     goveralls -coverprofile=coverage.txt -service=github
-
-
-
-#      - name: Install extra dependencies
-#        run: npm install -g @semantic-release/exec
-
-      # - uses: codfish/semantic-release-action@v1
-      #   with:
-      #     dry_run: true
-      #     additional_packages: |
-      #       ['@semantic-release/exec']
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
