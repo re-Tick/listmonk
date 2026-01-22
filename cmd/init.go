@@ -792,7 +792,12 @@ func awaitReload(sigChan chan os.Signal, closerWait chan bool, closer func()) ch
 
 	// Respawn a new process and exit the running one.
 	respawn := func() {
-		if err := syscall.Exec(os.Args[0], os.Args, os.Environ()); err != nil {
+		// Get the absolute path of the current executable to prevent code injection
+		execPath, err := os.Executable()
+		if err != nil {
+			lo.Fatalf("error getting executable path: %v", err)
+		}
+		if err := syscall.Exec(execPath, os.Args, os.Environ()); err != nil {
 			lo.Fatalf("error spawning process: %v", err)
 		}
 		os.Exit(0)
